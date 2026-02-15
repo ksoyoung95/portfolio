@@ -20,10 +20,7 @@ body{
   margin: 0;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, "Noto Sans KR", Arial, sans-serif;
   color: var(--text);
-  background:
-    radial-gradient(1200px 600px at 10% 10%, rgba(255,255,255,.08), transparent 60%),
-    radial-gradient(900px 500px at 85% 15%, rgba(255,255,255,.06), transparent 60%),
-    linear-gradient(180deg, var(--bg), var(--bg2));
+  background:#000;
   line-height: 1.6;
 }
 
