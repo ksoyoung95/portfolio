@@ -44,8 +44,8 @@
               <a class="nav__link" href="#about" aria-haspopup="true">소개</a>
               <ul class="nav__dropdown-menu" aria-label="소개 하위 메뉴">
                 <li><a class="nav__sublink" href="#profile">프로필</a></li>
-                <li><a class="nav__sublink" href="#awards">수상경력</a></li>
-                <li><a class="nav__sublink" href="#activities">활동이력</a></li>
+                <!--<li><a class="nav__sublink" href="#awards">수상경력</a></li>-->
+                <li><a class="nav__sublink" href="#activities">경력사항</a></li>
               </ul>
             </li>
             <li><a class="nav__link" href="#contact">문의</a></li>
@@ -79,7 +79,7 @@
 
             <ul class="meta">
               <li><span class="meta__k">Role</span><span class="meta__v">Web / Visual Designer</span></li>
-              <li><span class="meta__k">Skill</span><span class="meta__v">PS · AI · PR · figma · HTML/CSS</span></li>
+              <li><span class="meta__k">Skill</span><span class="meta__v">PS · AI · PR · Figma · HTML/CSS</span></li>
               <li><span class="meta__k">Focus</span><span class="meta__v">Brand · Detail · UX</span></li>
             </ul>
           </div>
@@ -105,14 +105,14 @@
         <div class="container">
           <header class="section__head">
             <h2 class="section__title">포트폴리오</h2>
-            <p class="section__desc">썸네일 클릭 → 팝업(모달)에서 여러 장 슬라이드로 확인</p>
+            <p class="section__desc">썸네일 클릭 → 팝업에서 여러 장 슬라이드로 확인</p>
           </header>
 
           <div class="filters" aria-label="포트폴리오 필터">
             <button class="pill is-active" type="button" data-filter="all">전체</button>
             <button class="pill" type="button" data-filter="detail">상세페이지</button>
-            <button class="pill" type="button" data-filter="package">패키지</button>
-            <button class="pill" type="button" data-filter="sns">SNS</button>
+            <button class="pill" type="button" data-filter="package">SNS</button>
+            <button class="pill" type="button" data-filter="sns">광고 · 옥외</button>
             <button class="pill" type="button" data-filter="web">웹</button>
           </div>
 
@@ -125,7 +125,7 @@
         <div class="container">
           <header class="section__head">
             <h2 class="section__title">소개</h2>
-            <p class="section__desc">프로필 / 수상경력 / 활동이력을 정리해두는 영역입니다.</p>
+            <p class="section__desc">프로필 / 경력사항을 정리해두는 영역입니다.</p>
           </header>
 
           <div class="about">
@@ -138,20 +138,20 @@
                 </div>
                 <div class="dl__row">
                   <dt>전문 분야</dt>
-                  <dd>웹디자인 · 비주얼디자인 · 퍼블리싱</dd>
+                  <dd>웹디자인 · 비주얼디자인 · 컨텐츠디자인</dd>
                 </div>
                 <div class="dl__row">
                   <dt>사용 툴</dt>
-                  <dd>Photoshop · Illustrator · Premiere Pro · HTML/CSS</dd>
+                  <dd>Photoshop · Illustrator · Premiere Pro · Figma · HTML/CSS</dd>
                 </div>
                 <div class="dl__row">
                   <dt>키워드</dt>
-                  <dd>브랜드 톤 · 디테일 · 사용자 흐름</dd>
+                  <dd>브랜드 톤앤매너 · 디테일 · 광고컨텐츠 · </dd>
                 </div>
               </dl>
             </section>
 
-            <section class="panel" id="awards">
+            <!--<section class="panel" id="awards">
               <h3 class="panel__title">수상경력</h3>
               <ul class="timeline">
                 <li class="timeline__item">
@@ -163,10 +163,10 @@
                   <p class="timeline__meta">연도 · 주최기관</p>
                 </li>
               </ul>
-            </section>
+            </section>-->
 
             <section class="panel" id="activities">
-              <h3 class="panel__title">활동이력</h3>
+              <h3 class="panel__title">경력사항</h3>
               <ul class="timeline">
                 <li class="timeline__item">
                   <p class="timeline__title">브랜드/프로젝트 · 역할</p>
@@ -178,55 +178,6 @@
                 </li>
               </ul>
             </section>
-          </div>
-        </div>
-      </section>
-
-      <!-- Contact -->
-      <section class="section" id="contact">
-        <div class="container">
-          <header class="section__head">
-            <h2 class="section__title">문의</h2>
-            <p class="section__desc">협업/외주/채용 관련 연락은 아래로 부탁드려요.</p>
-          </header>
-
-          <div class="contact">
-            <div class="contact__card">
-              <h3 class="contact__title">Contact Info</h3>
-              <ul class="contact__list">
-                <li>
-                  <span class="contact__k">Email</span>
-                  <a class="contact__v" href="mailto:you@example.com">you@example.com</a>
-                </li>
-                <li>
-                  <span class="contact__k">Phone</span>
-                  <a class="contact__v" href="tel:+821012345678">010-1234-5678</a>
-                </li>
-                <li>
-                  <span class="contact__k">Link</span>
-                  <a class="contact__v" href="#" target="_blank" rel="noreferrer">Behance / Notion / Instagram</a>
-                </li>
-              </ul>
-              <p class="contact__note">* 실제 정보로 교체해 주세요.</p>
-            </div>
-
-            <form class="form" action="#" method="post">
-              <div class="form__row">
-                <label class="label" for="name">이름</label>
-                <input class="input" id="name" name="name" type="text" placeholder="홍길동" required />
-              </div>
-              <div class="form__row">
-                <label class="label" for="email">이메일</label>
-                <input class="input" id="email" name="email" type="email" placeholder="name@email.com" required />
-              </div>
-              <div class="form__row">
-                <label class="label" for="message">내용</label>
-                <textarea class="textarea" id="message" name="message" rows="5" placeholder="문의 내용을 적어주세요." required></textarea>
-              </div>
-
-              <button class="btn btn--primary btn--full" type="submit">보내기 (데모)</button>
-              <p class="form__hint">* 실제 전송은 Formspree/Netlify Forms 등으로 연결하면 돼요.</p>
-            </form>
           </div>
         </div>
       </section>
