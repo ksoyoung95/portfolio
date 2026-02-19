@@ -849,3 +849,9 @@ dd {
     bottom: 14px;
   }
 }
+/* 모달 열렸을 때 skip 링크 숨김(접근성 링크는 유지) */
+.modal.is-open ~ .skip,
+.modal.is-open .skip,
+body.modal-open .skip {
+  display: none !important;
+}

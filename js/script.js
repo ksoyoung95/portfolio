@@ -337,6 +337,8 @@ function openModal(project) {
   modal.classList.add("is-open");
   modal.setAttribute("aria-hidden", "false");
   document.body.style.overflow = "hidden";
+  document.body.classList.add("modal-open");
+
 
   if (modalTitle) modalTitle.textContent = project.title || "";
   if (modalTag) modalTag.textContent = project.tag || categoryLabel[project.category] || "";
@@ -367,6 +369,8 @@ function closeModal() {
   modal.classList.remove("is-open");
   modal.setAttribute("aria-hidden", "true");
   document.body.style.overflow = "";
+  document.body.classList.remove("modal-open");
+
 
   activeProject = null;
   slideIndex = 0;
