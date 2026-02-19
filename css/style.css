@@ -53,6 +53,7 @@ img {
   margin-inline: auto;
 }
 
+/* Skip link (A11y) */
 .skip {
   position: absolute;
   left: -9999px;
@@ -393,6 +394,7 @@ img {
   font-size: 17px;
   letter-spacing: -0.2px;
 }
+
 .tag {
   font-size: 12px;
   padding: 6px 10px;
@@ -402,6 +404,7 @@ img {
   color: rgba(255, 255, 255, 0.72);
   white-space: nowrap;
 }
+
 .card__desc {
   margin: 10px 0 12px;
   color: var(--muted);
@@ -616,10 +619,7 @@ dd {
   padding: 18px 18px 20px;
 }
 .modal__top {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 10px;
+  display: block; /* title only */
   margin-top: 4px;
 }
 .modal__title {
@@ -631,6 +631,22 @@ dd {
   margin: 12px 0 14px;
   color: rgba(255, 255, 255, 0.72);
 }
+
+/* ✅ tag row (under desc) */
+.modal__tag-row {
+  margin-top: -4px;
+  margin-bottom: 14px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+/* PC: avoid close button overlap */
+@media (min-width: 781px) {
+  .modal__content {
+    padding-top: 64px;
+  }
+}
+
 .modal__meta {
   list-style: none;
   padding: 0;
@@ -810,6 +826,12 @@ dd {
     margin: 48px auto;
     min-height: auto;
   }
+
+  /* 모바일에서는 X 버튼 공간 굳이 크게 필요 없음 */
+  .modal__content {
+    padding-top: 18px;
+  }
+
   .carousel {
     min-height: 320px;
     border-right: 0;
@@ -819,6 +841,7 @@ dd {
     min-height: 320px;
   }
 }
+
 /* Floating Top Button */
 .footer__top {
   position: fixed;
@@ -826,7 +849,6 @@ dd {
   bottom: 18px;
   z-index: 1000;
 
-  /* 기본은 숨김(스크롤 일정 이상에서만 보이게) */
   opacity: 0;
   visibility: hidden;
   transform: translateY(10px);
@@ -834,24 +856,20 @@ dd {
 
   transition: opacity 180ms ease, transform 180ms ease, visibility 180ms ease;
 }
-
 .footer__top.is-visible {
   opacity: 1;
   visibility: visible;
   transform: translateY(0);
   pointer-events: auto;
 }
-
-/* 모바일에서 살짝 여백 조정(선택) */
 @media (max-width: 480px) {
   .footer__top {
     right: 14px;
     bottom: 14px;
   }
 }
-/* 모달 열렸을 때 skip 링크 숨김(접근성 링크는 유지) */
-.modal.is-open ~ .skip,
-.modal.is-open .skip,
+
+/* ✅ Modal open: hide skip link (keep in HTML for accessibility) */
 body.modal-open .skip {
   display: none !important;
 }
