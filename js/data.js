@@ -103,14 +103,12 @@ const portfolioData = [
     desc: "현대디에프 신규가입 회원들을 위한 이벤트 혜택 페이지",
     thumb: "./images/profile/work_piece/thumb/thumb_jeju_air.jpg",
     popupImages: [
-      "assets/popup/hyundai-join-1.jpg",
-      "assets/popup/hyundai-join-2.jpg",
-      "assets/popup/hyundai-join-3.jpg",
+      "./images/profile/work_piece/popup/images_jeju.jpg"
     ],
     tool: "PS / FIGMA",
     contribution: "100%",
     type: "E-commerce",
-    fullImage: "assets/full/hyundai-join-full.jpg",
+    fullImage: "./images/profile/work_piece/detail_page/PC_detail_jeju_air.jpg",
   },
 
   // 여기에 계속 추가하면 됨
