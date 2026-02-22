@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Work | So Young</title>
+
+  <!-- 기존 사이트 스타일 유지하고 싶으면 style.css도 같이 -->
+  <!-- 필요 없으면 아래 줄 제거 가능 -->
+  <link rel="stylesheet" href="./css/style.css">
+
+  <!-- work 전용 스타일 -->
+  <link rel="stylesheet" href="./css/work.css">
+</head>
+
+<body class="workPage">
+  <header class="workHeader">
+    <div class="workContainer workHeaderRow">
+      <a class="workBack" href="./index.html#portfolio" aria-label="포트폴리오로 돌아가기">
+        <img src="./images/profile/ioc/Expand_left.png" alt="" aria-hidden="true">
+        <span>Portfolio</span>
+      </a>
+
+      <div class="workBrand">So Young</div>
+    </div>
+  </header>
+
+  <main class="workMain">
+    <div class="workContainer">
+      <!-- 작품 정보 -->
+      <section class="workInfo" aria-label="작품 정보">
+        <h1 class="workTitle" id="workTitle">작품 제목</h1>
+        <p class="workSubtitle" id="workSubtitle">작품 설명</p>
+
+        <div class="workMeta">
+          <div class="workMetaBox" id="workTool">Tool :</div>
+          <div class="workMetaBox" id="workContribution">Contribution :</div>
+          <div class="workMetaBox" id="workType">Type :</div>
+        </div>
+      </section>
+
+      <!-- 갤러리 -->
+      <section class="workGallery" aria-label="작품 이미지/영상 갤러리">
+        <div class="galleryGrid" id="galleryGrid"></div>
+      </section>
+
+      <!-- 에러/가이드 -->
+      <section class="workNotice" id="workNotice" hidden></section>
+    </div>
+  </main>
+
+  <!-- Lightbox (확대 보기) -->
+  <div class="lightbox" id="lightbox" aria-hidden="true">
+    <div class="lightboxBackdrop" data-close="true" aria-hidden="true"></div>
+
+    <div class="lightboxDialog" role="dialog" aria-modal="true" aria-label="이미지 확대 보기">
+      <button class="lightboxClose" type="button" data-close="true" aria-label="닫기">
+        <img src="./images/profile/ioc/Close_round.png" alt="" aria-hidden="true">
+      </button>
+
+      <button class="lightboxNav lightboxNavPrev" type="button" aria-label="이전" data-prev>
+        <img src="./images/profile/ioc/Expand_left.png" alt="" aria-hidden="true">
+      </button>
+
+      <div class="lightboxStage" id="lightboxStage">
+        <!-- JS로 image/video 넣음 -->
+      </div>
+
+      <button class="lightboxNav lightboxNavNext" type="button" aria-label="다음" data-next>
+        <img src="./images/profile/ioc/Expand_right.png" alt="" aria-hidden="true">
+      </button>
+
+      <div class="lightboxCount" id="lightboxCount" aria-hidden="true">1 / 1</div>
+    </div>
+  </div>
+
+  <!-- data.js 먼저 -->
+  <script src="./js/data.js"></script>
+  <script src="./js/work.js"></script>
+</body>
+</html>
