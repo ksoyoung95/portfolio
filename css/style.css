@@ -14,7 +14,7 @@
   --shadow: 0 30px 70px rgba(0,0,0,.45);
   --shadowSoft: 0 14px 34px rgba(0,0,0,.28);
 
-  /* ✅ About 패널 공통 높이 (반응형 안전하게 clamp) */
+  /* About 패널 공통 높이 (반응형 안전하게 clamp) */
   --aboutPanelH: clamp(420px, 55vh, 560px);
 }
 
@@ -181,7 +181,7 @@ a{ color:inherit; }
   letter-spacing: -.02em;
 }
 
-/* ✅ 프로필/경력 높이 동일 (데스크탑에서만) */
+/* 프로필/경력 높이 동일 (데스크탑에서만) */
 .panelProfile,
 .panelCareer{
   height: var(--aboutPanelH);
@@ -193,11 +193,11 @@ a{ color:inherit; }
 .profileKey{ margin:0; color: rgba(255,255,255,.55); font-weight: 950; font-size: 1.05rem; }
 .profileVal{ margin:0; font-weight: 950; font-size: 1.2rem; line-height: 1.35; letter-spacing: -.01em; }
 
-/* ✅ Career: 패널 안쪽 스크롤 영역 */
+/* Career: 패널 안쪽 스크롤 영역 */
 .careerScroll{
   position: relative;
   flex: 1;
-  min-height: 0;   /* ✅ 중요 */
+  min-height: 0;   /* 중요 */
   overflow: hidden;
 }
 .careerGrid{
@@ -207,7 +207,7 @@ a{ color:inherit; }
   gap: 1rem;
   padding-right: .8rem;
   height: 100%;
-  overflow: auto;  /* ✅ 스크롤은 여기에서만 */
+  overflow: auto;  /* 스크롤은 여기에서만 */
   min-height: 0;
 }
 .careerGrid::-webkit-scrollbar{ width: 12px; }
@@ -525,7 +525,7 @@ a{ color:inherit; }
   .aboutGrid{ grid-template-columns: 1fr; }
   .workGrid{ grid-template-columns: 1fr; }
 
-  /* ✅ 모바일에서는 같은 높이 강제 X (내용만큼 자연스럽게) */
+  /* 모바일에서는 같은 높이 강제 X (내용만큼 자연스럽게) */
   .panelProfile,
   .panelCareer{
     height: auto;

@@ -113,5 +113,5 @@ const portfolioData = [
     fullImage: "assets/full/hyundai-join-full.jpg",
   },
 
-  // ✅ 여기에 계속 추가하면 됨
+  // 여기에 계속 추가하면 됨
 ];
