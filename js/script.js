@@ -1,8 +1,6 @@
 /* ==========================
-   APP LOGIC
-   - Career: modal open
-   - Portfolio: go to work.html
-   - Top button: show after scroll 400px
+   MAIN PAGE LOGIC
+   - index.html 전용
 ========================== */
 
 /** ---------- Helpers ---------- */
@@ -45,7 +43,7 @@ function wireModalClose(modalEl) {
   });
 }
 
-/** ---------- Header (mobile nav) ---------- */
+/** ---------- Mobile Nav ---------- */
 function initMobileNav() {
   const toggleBtn = qs(".navToggle");
   const mobileNav = qs(".mobileNav");
@@ -66,15 +64,10 @@ function initMobileNav() {
   });
 }
 
-/** ---------- Career ---------- */
+/** ---------- Career Render ---------- */
 function renderCareers() {
   const grid = qs("#careerGrid");
-  if (!grid) return;
-
-  if (!Array.isArray(window.careerData)) {
-    console.error("careerData not found. Check data.js load order.");
-    return;
-  }
+  if (!grid || !Array.isArray(window.careerData)) return;
 
   grid.innerHTML = window.careerData.map((c) => `
     <button class="careerMiniItem" type="button" data-career-id="${c.id}">
@@ -87,11 +80,13 @@ function renderCareers() {
   `).join("");
 }
 
+/** ---------- Career Modal ---------- */
 function initCareerModal() {
   const modal = qs("#careerModal");
   const grid = qs("#careerGrid");
 
-  if (!modal || !grid) return;
+  if (!modal || !grid || !Array.isArray(window.careerData)) return;
+
   wireModalClose(modal);
 
   grid.addEventListener("click", (e) => {
@@ -104,9 +99,7 @@ function initCareerModal() {
     qs("#careerModalTitle").textContent = item.company;
     qs("#careerModalTag").textContent = item.tag;
     qs("#careerModalPeriod").textContent = item.period;
-
-    const taskEl = qs("#careerModalTasks");
-    taskEl.innerHTML = (item.tasks || []).map((task) => `<li>${task}</li>`).join("");
+    qs("#careerModalTasks").innerHTML = (item.tasks || []).map((task) => `<li>${task}</li>`).join("");
 
     openModal(modal);
   });
@@ -117,13 +110,10 @@ let activeFilter = "all";
 let visibleCount = 4;
 
 function getFilteredWorks() {
-  if (!Array.isArray(window.portfolioData)) {
-    console.error("portfolioData not found. Check data.js load order.");
-    return [];
-  }
+  if (!Array.isArray(window.portfolioData)) return [];
 
   const validWorks = window.portfolioData.filter((w) => {
-    return w.id && w.title && w.thumb && w.desc;
+    return w.id && w.title && w.desc && w.thumb;
   });
 
   if (activeFilter === "all") return validWorks;
@@ -136,9 +126,9 @@ function renderPortfolio() {
   if (!grid) return;
 
   const filtered = getFilteredWorks();
-  const slice = filtered.slice(0, visibleCount);
+  const visibleWorks = filtered.slice(0, visibleCount);
 
-  grid.innerHTML = slice.map((w) => `
+  grid.innerHTML = visibleWorks.map((w) => `
     <a class="workCard" href="work.html?id=${encodeURIComponent(w.id)}" data-work-id="${w.id}">
       <div class="workThumb">
         <img src="${w.thumb}" alt="${w.title} 썸네일" loading="lazy" />

@@ -1,219 +1,177 @@
 /* ==========================
-   Work Page Logic
+   WORK DETAIL LOGIC ONLY
+   - work.html 전용
+   - 데이터는 workdata.js에서만 관리
+   - PC / MO 반응형 상세 이미지 자동 처리
 ========================== */
 
-function qs(sel, el = document) { return el.querySelector(sel); }
-function qsa(sel, el = document) { return [...el.querySelectorAll(sel)]; }
+/** ---------- Helpers ---------- */
+function qs(sel, el = document) {
+  return el.querySelector(sel);
+}
 
 function getQueryId() {
-  const p = new URLSearchParams(location.search);
-  return (p.get("id") || "").trim();
+  const params = new URLSearchParams(window.location.search);
+  return (params.get("id") || "").trim();
 }
 
-function guessType(src) {
-  const s = String(src).toLowerCase();
-  if (s.endsWith(".gif")) return "gif";
-  if (s.endsWith(".mp4") || s.endsWith(".webm")) return "video";
-  return "image";
+/** ---------- Back Button ---------- */
+function initBackButton() {
+  const backBtn = qs("#backBtn");
+  if (!backBtn) return;
+
+  backBtn.addEventListener("click", () => {
+    if (window.history.length > 1) {
+      window.history.back();
+    } else {
+      window.location.href = "./index.html#portfolio";
+    }
+  });
 }
 
-/**
- * Work page에서는 "전체 보기"가 목적이라
- * fullImages(여러장) → fullImage(한장) → (fallback) popupImages/images 순서로 사용
- */
-function normalizeMedia(work) {
-  // 1) media 배열이 있으면 그대로 사용 (확장형)
-  if (Array.isArray(work.media) && work.media.length) return work.media;
+/** ---------- Top Button ---------- */
+function initTopButton() {
+  const topBtn = qs("#workTopBtn");
+  if (!topBtn) return;
 
-  // 2) fullImages (전체 페이지용 여러장)
-  if (Array.isArray(work.fullImages) && work.fullImages.length) {
-    return work.fullImages.map((src, idx) => ({
-      type: guessType(src),
-      src,
-      alt: `${work.title} 전체 이미지 ${idx + 1}`
-    }));
+  const toggle = () => {
+    if (window.scrollY > 300) {
+      topBtn.classList.add("show");
+    } else {
+      topBtn.classList.remove("show");
+    }
+  };
+
+  window.addEventListener("scroll", toggle, { passive: true });
+  toggle();
+}
+
+/** ---------- Media Factory ---------- */
+function createMediaNode(item) {
+  if (!item || !item.type) return null;
+
+  if (item.type === "video") {
+    const video = document.createElement("video");
+    video.className = "workFullMedia";
+    video.src = item.src;
+    video.controls = true;
+    video.playsInline = true;
+    video.preload = "metadata";
+    return video;
   }
 
-  // 3) fullImage (전체 페이지용 한장)
-  if (work.fullImage) {
-    return [{
-      type: guessType(work.fullImage),
-      src: work.fullImage,
-      alt: `${work.title} 전체 이미지`
-    }];
+  if (item.type === "gif") {
+    const gif = document.createElement("img");
+    gif.className = "workFullImage";
+    gif.src = item.src;
+    gif.alt = item.alt || "";
+    gif.loading = "lazy";
+    return gif;
   }
 
-  // 4) fallback: popupImages/images (없으면 이것이라도)
-  const fallbackArray = work.popupImages || work.images;
-  if (Array.isArray(fallbackArray) && fallbackArray.length) {
-    return fallbackArray.map((src, idx) => ({
-      type: guessType(src),
-      src,
-      alt: `${work.title} 이미지 ${idx + 1}`
-    }));
+  if (item.type === "responsive-image") {
+    const picture = document.createElement("picture");
+
+    if (item.mo) {
+      const source = document.createElement("source");
+      source.media = "(max-width: 768px)";
+      source.srcset = item.mo;
+      picture.appendChild(source);
+    }
+
+    const img = document.createElement("img");
+    img.className = "workFullImage";
+    img.src = item.pc || item.mo || "";
+    img.alt = item.alt || "";
+    img.loading = "lazy";
+
+    picture.appendChild(img);
+    return picture;
   }
 
-  return [];
-}
-
-/* ---------- Lightbox ---------- */
-const lightbox = qs("#lightbox");
-const lightboxStage = qs("#lightboxStage");
-const lightboxCount = qs("#lightboxCount");
-
-let activeMedia = [];
-let activeIndex = 0;
-
-function createMediaNode(item, isLarge = false) {
-  const { type, src, alt } = item;
-
-  if (type === "video") {
-    const v = document.createElement("video");
-    v.src = src;
-    v.controls = true;
-    v.playsInline = true;
-    v.preload = "metadata";
-    v.setAttribute("aria-label", alt || "video");
-    if (!isLarge) v.muted = true;
-    return v;
+  if (item.type === "image") {
+    const img = document.createElement("img");
+    img.className = "workFullImage";
+    img.src = item.src;
+    img.alt = item.alt || "";
+    img.loading = "lazy";
+    return img;
   }
 
-  // gif도 img로 처리
-  const img = document.createElement("img");
-  img.src = src;
-  img.alt = alt || "";
-  if (!isLarge) img.loading = "lazy";
-  return img;
+  return null;
 }
 
-function renderLightbox() {
-  if (!activeMedia.length) return;
-
-  const item = activeMedia[activeIndex];
-  lightboxStage.innerHTML = "";
-  lightboxStage.appendChild(createMediaNode(item, true));
-  lightboxCount.textContent = `${activeIndex + 1} / ${activeMedia.length}`;
-}
-
-function openLightbox(mediaList, startIndex = 0) {
-  activeMedia = mediaList;
-  activeIndex = startIndex;
-
-  lightbox.classList.add("isOpen");
-  lightbox.setAttribute("aria-hidden", "false");
-  document.body.style.overflow = "hidden";
-
-  renderLightbox();
-  document.addEventListener("keydown", onKeyDown);
-}
-
-function closeLightbox() {
-  lightbox.classList.remove("isOpen");
-  lightbox.setAttribute("aria-hidden", "true");
-  document.body.style.overflow = "";
-
-  activeMedia = [];
-  activeIndex = 0;
-
-  document.removeEventListener("keydown", onKeyDown);
-}
-
-function prevMedia() {
-  if (!activeMedia.length) return;
-  activeIndex = (activeIndex - 1 + activeMedia.length) % activeMedia.length;
-  renderLightbox();
-}
-
-function nextMedia() {
-  if (!activeMedia.length) return;
-  activeIndex = (activeIndex + 1) % activeMedia.length;
-  renderLightbox();
-}
-
-function onKeyDown(e) {
-  if (e.key === "Escape") closeLightbox();
-  if (e.key === "ArrowLeft") prevMedia();
-  if (e.key === "ArrowRight") nextMedia();
-}
-
-lightbox?.addEventListener("click", (e) => {
-  if (e.target.closest("[data-close='true']")) closeLightbox();
-  if (e.target.closest("[data-prev]")) prevMedia();
-  if (e.target.closest("[data-next]")) nextMedia();
-});
-
-/* ---------- Render Work ---------- */
-function renderWork() {
+/** ---------- Render Detail ---------- */
+function renderWorkDetail() {
   const id = getQueryId();
-  const notice = qs("#workNotice");
 
-  if (!Array.isArray(window.portfolioData)) {
-    notice.hidden = false;
-    notice.innerHTML = `
-      <strong>오류:</strong> portfolioData를 찾을 수 없어요.<br/>
-      work.html에서 <code>data.js</code>가 <code>work.js</code>보다 먼저 로드되는지 확인해줘.
-    `;
+  if (!Array.isArray(window.workDetailData)) {
+    console.error("workDetailData not found. Check workdata.js load order.");
     return;
   }
 
-  const work = portfolioData.find(w => w.id === id);
+  const work = window.workDetailData.find((item) => item.id === id);
+
   if (!work) {
-    const ids = portfolioData.map(w => `<code>${w.id}</code>`).join(", ");
-    notice.hidden = false;
-    notice.innerHTML = `
-      <strong>작품을 찾을 수 없어요.</strong><br/>
-      현재 URL의 id: <code>${id || "(없음)"}</code><br/><br/>
-      사용 가능한 id 목록: ${ids}<br/><br/>
-      예: <code>work.html?id=${portfolioData[0]?.id || "your-id"}</code>
+    document.body.innerHTML = `
+      <main style="padding:40px;font-family:'Pretendard Variable', Pretendard, system-ui, sans-serif;background:#FCFCFC;min-height:100vh;">
+        <p style="margin:0 0 12px;font-size:20px;font-weight:700;">작업 정보를 찾을 수 없습니다.</p>
+        <a href="./index.html#portfolio" style="color:#111;text-decoration:underline;">포트폴리오로 돌아가기</a>
+      </main>
     `;
     return;
   }
 
-  // 텍스트
-  qs("#workTitle").textContent = work.title || "Untitled";
-  qs("#workSubtitle").textContent = work.subtitle || work.desc || "";
+  const categoryEl = qs("#workCategory");
+  const clientEl = qs("#workClient");
+  const titleEl = qs("#workTitle");
+  const roleEl = qs("#workRole");
+  const contributionEl = qs("#workContribution");
+  const toolsEl = qs("#workTools");
 
-  qs("#workTool").textContent = `Tool : ${work.tool || "-"}`;
-  qs("#workContribution").textContent = `Contribution : ${work.contribution || "-"}`;
-  qs("#workType").textContent = `Type : ${work.type || "-"}`;
+  if (categoryEl) categoryEl.textContent = work.category || "";
+  if (clientEl) clientEl.textContent = work.client || "";
+  if (titleEl) titleEl.textContent = work.title || "";
+  if (roleEl) roleEl.textContent = work.role || "";
+  if (contributionEl) contributionEl.textContent = work.contribution || "";
+  if (toolsEl) toolsEl.textContent = work.tools || "";
 
-  // 미디어
-  const mediaList = normalizeMedia(work);
-  const grid = qs("#galleryGrid");
+  const colorWrap = qs("#workColors");
+  if (colorWrap) {
+    colorWrap.innerHTML = "";
 
-  if (!mediaList.length) {
-    notice.hidden = false;
-    notice.innerHTML = `
-      <strong>미디어가 등록되지 않았어요.</strong><br/>
-      data.js의 해당 작품(<code>${work.id}</code>)에
-      <code>fullImages</code> 또는 <code>fullImage</code>를 추가해줘.<br/>
-      (fallback으로 <code>popupImages</code>도 가능)
-    `;
-    return;
+    (work.colors || []).forEach((color) => {
+      const item = document.createElement("div");
+      item.className = "workColorItem";
+
+      const dot = document.createElement("span");
+      dot.className = "workColorDot";
+      dot.style.background = color;
+
+      const code = document.createElement("span");
+      code.className = "workColorCode";
+      code.textContent = color;
+
+      item.appendChild(dot);
+      item.appendChild(code);
+      colorWrap.appendChild(item);
+    });
   }
 
-  notice.hidden = true;
+  const detailWrap = qs("#workFullImageWrap");
+  if (detailWrap) {
+    detailWrap.innerHTML = "";
 
-  grid.innerHTML = mediaList.map((m, idx) => {
-    const label = m.alt ? m.alt : `${work.title} ${idx + 1}`;
-    return `
-      <button class="galleryItem" type="button" data-open="${idx}" aria-label="${label}">
-        <div class="galleryThumb">
-          ${m.type === "video"
-            ? `<video src="${m.src}" muted playsinline preload="metadata"></video>`
-            : `<img src="${m.src}" alt="${label}" loading="lazy">`
-          }
-        </div>
-        <div class="galleryCaption">${label}</div>
-      </button>
-    `;
-  }).join("");
-
-  grid.addEventListener("click", (e) => {
-    const btn = e.target.closest("[data-open]");
-    if (!btn) return;
-    openLightbox(mediaList, Number(btn.dataset.open));
-  }, { once: true }); // 중복 바인딩 방지
+    (work.detailMedia || []).forEach((media) => {
+      const node = createMediaNode(media);
+      if (node) detailWrap.appendChild(node);
+    });
+  }
 }
 
-document.addEventListener("DOMContentLoaded", renderWork);
+/** ---------- Init ---------- */
+document.addEventListener("DOMContentLoaded", () => {
+  initBackButton();
+  initTopButton();
+  renderWorkDetail();
+});

@@ -1,231 +1,378 @@
+/* =====================================================
+   01. Root
+===================================================== */
 :root{
-  --bg:#090B10;
-  --panel:#17191D;
-  --panel2:#202226;
-  --stroke:rgba(255,255,255,.15);
-  --text:#fff;
-  --muted:#B4B4B5;
-  --shadow: 0 20px 60px rgba(0,0,0,.55);
-  --radius:18px;
+  --work-bg: #FCFCFC;
+  --work-text: #111111;
+  --work-muted: #8F8F8F;
+  --work-line: #EAEAEA;
+
+  --work-container: 1120px;
 }
 
-*{ box-sizing:border-box; }
-html,body{ height:100%; }
+/* =====================================================
+   02. Reset / Base
+===================================================== */
+*{
+  box-sizing: border-box;
+}
+
+html{
+  scroll-behavior: smooth;
+}
+
 body{
-  margin:0;
-  font-family: Pretendard, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
-  color:var(--text);
-  background: radial-gradient(1200px 600px at 30% -10%, rgba(255,255,255,.10), transparent 60%),
-              var(--bg);
+  font-family:
+  "Pretendard Variable",
+  Pretendard,
+  -apple-system,
+  BlinkMacSystemFont,
+  system-ui,
+  Roboto,
+  "Helvetica Neue",
+  "Segoe UI",
+  "Apple SD Gothic Neo",
+  "Noto Sans KR",
+  "Malgun Gothic",
+  sans-serif;
 }
 
-a{ color:inherit; text-decoration:none; }
-.container{ width:min(1200px, calc(100% - 40px)); margin:0 auto; }
-
-/* Header */
-.workHeader{
-  position:sticky;
-  top:0;
-  z-index:10;
-  background: rgba(9,11,16,.65);
-  backdrop-filter: blur(8px);
-  border-bottom: 1px solid rgba(255,255,255,.08);
+img{
+  display: block;
+  max-width: 100%;
 }
-.headerRow{
+
+button{
+  border: none;
+  background: none;
+  font: inherit;
+  cursor: pointer;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+a{
+  color: inherit;
+  text-decoration: none;
+}
+
+.workContainer{
+  width: min(var(--work-container), calc(100% - 48px));
+  margin-inline: auto;
+}
+
+/* =====================================================
+   03. Top Header
+===================================================== */
+.workTopBar{
+  padding: 16px 0 0;
+}
+
+.workTopBarInner{
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.workBackBtn{
   display:flex;
-  align-items:flex-start;
-  gap:16px;
-  padding:18px 0;
-}
-.brand{
-  padding:10px 12px;
-  border:1px solid rgba(255,255,255,.15);
-  border-radius:10px;
-  background: rgba(23,25,29,.6);
-}
-.headerTitleWrap{ flex:1; min-width:0; }
-.workTitle{
-  margin:0;
-  font-size: clamp(1.3rem, 2.8vw, 2rem);
-  font-weight: 900;
-  letter-spacing:-.02em;
-}
-.workSubtitle{
-  margin:.35rem 0 0;
-  color: var(--muted);
-  font-size: .95rem;
-  line-height:1.4;
+  align-items:center;
+  justify-content:center;
+
+  width:26px;
+  height:26px;
+
+  margin-right:4px;
 }
 
-/* Meta */
-.workMain{ padding: 28px 0 60px; }
-.metaRow{
-  display:grid;
-  grid-template-columns: repeat(3, minmax(0,1fr));
-  gap:12px;
+.workBackBtn img{
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+}
+
+.workTopLabel{
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #222222;
+}
+
+/* =====================================================
+   04. Project Intro
+===================================================== */
+.workIntro{
+  padding: 84px 0 54px;
+}
+
+.workCategory{
+  margin: 0 0 18px;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #FF8E72;
+  letter-spacing: -0.02em;
+}
+
+.workTitleGroup{
+  margin-bottom: 42px;
+}
+
+.workClient{
+  margin: 0 0 10px;
+  font-size: 2rem;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.workMainTitle{
+  margin: 0;
+  font-size: clamp(2.4rem, 3.6vw, 4rem);
+  font-weight: 900;
+  line-height: 1.22;
+  letter-spacing: -0.04em;
+}
+
+.workMetaGrid{
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 56px;
+  margin-bottom: 54px;
+}
+
+.workMetaItem{
+  min-width: 0;
+}
+
+.workMetaLabel{
+  display: block;
+  margin-bottom: 8px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #B8B8B8;
+  letter-spacing: -0.01em;
+}
+
+.workMetaValue{
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.45;
+  color: #222222;
+}
+
+.workColorSection{
+  display: grid;
+  gap: 18px;
+}
+
+.workSectionSubTitle{
+  margin: 0;
+  font-size: 1.9rem;
+  font-weight: 800;
+  line-height: 1.2;
+}
+
+.workColorList{
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  flex-wrap: wrap;
+}
+
+.workColorItem{
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+}
+
+.workColorDot{
+  width: 42px;
+  height: 42px;
+  border-radius: 999px;
+}
+
+.workColorCode{
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: #666666;
+  letter-spacing: -0.01em;
+}
+
+/* =====================================================
+   05. Detailed Image Section
+===================================================== */
+.workImageSection{
+  padding: 8px 0 80px;
+}
+
+.workImageContainer{
   margin-bottom: 18px;
 }
-.metaBox{
-  padding:14px 16px;
-  border-radius: 12px;
-  background: rgba(24,26,39,.6);
-  border: 1px solid rgba(255,255,255,.22);
-  font-weight: 600;
-}
-@media (max-width: 720px){
-  .metaRow{ grid-template-columns: 1fr; }
+
+.workDetailImageTitle{
+  font-size: 1.45rem;
 }
 
-/* Notice */
-.notice{
-  margin: 10px 0 18px;
-  padding: 14px 16px;
-  border-radius: 12px;
-  background: rgba(255, 80, 80, .08);
-  border: 1px solid rgba(255, 80, 80, .25);
-  color: #ffe4e4;
-  line-height:1.45;
-}
-.notice code{
-  background: rgba(255,255,255,.08);
-  padding: 2px 6px;
-  border-radius: 6px;
+.workFullImageWrap{
+  width: 100%;
 }
 
-/* Gallery */
-.galleryGrid{
-  display:grid;
-  grid-template-columns: repeat(3, minmax(0,1fr));
-  gap:14px;
-}
-@media (max-width: 980px){
-  .galleryGrid{ grid-template-columns: repeat(2, minmax(0,1fr)); }
-}
-@media (max-width: 560px){
-  .galleryGrid{ grid-template-columns: 1fr; }
+.workFullImage{
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
-.galleryItem{
-  width:100%;
-  text-align:left;
-  border-radius: var(--radius);
-  border: 1px solid rgba(255,255,255,.12);
-  background: rgba(23,25,29,.75);
-  overflow:hidden;
-  cursor:pointer;
-  box-shadow: 0 14px 40px rgba(0,0,0,.35);
-  padding:0;
-}
-.galleryThumb{
-  aspect-ratio: 4 / 3;
-  background: #0f1116;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  overflow:hidden;
-}
-.galleryThumb img,
-.galleryThumb video{
-  width:100%;
-  height:100%;
-  object-fit: cover;
-  display:block;
-}
-.galleryCaption{
-  padding: 12px 12px 14px;
-  color: rgba(255,255,255,.85);
-  font-size: .92rem;
+.workFullMedia{
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
-/* Lightbox */
-.lightbox{
-  position:fixed;
-  inset:0;
-  display:none;
-  z-index:100;
-}
-.lightbox.isOpen{ display:block; }
-.lightboxBackdrop{
-  position:absolute;
-  inset:0;
-  background: rgba(18,22,34,.70);
-}
-.lightboxDialog{
-  position:absolute;
-  inset: 30px;
-  border-radius: 24px;
-  background: rgba(13,16,24,.95);
-  border: 1px solid rgba(255,255,255,.18);
-  box-shadow: var(--shadow);
-  overflow:hidden;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-@media (max-width: 720px){
-  .lightboxDialog{ inset: 14px; border-radius: 18px; }
+/* =====================================================
+   06. Floating Top Button
+===================================================== */
+.workFloatingTop{
+  position: fixed;
+  right: 28px;
+  bottom: 28px;
+  z-index: 60;
+
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+
+  background: #F1F1F1;
+  border-radius: 10px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(10px);
+  transition:
+    opacity 0.28s ease,
+    transform 0.28s ease,
+    visibility 0.28s ease;
 }
 
-.lightboxStage{
-  width:100%;
-  height:100%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding: 56px 56px 44px;
-}
-@media (max-width: 720px){
-  .lightboxStage{ padding: 52px 18px 44px; }
+.workFloatingTop img{
+  width: 16px;
+  height: 16px;
 }
 
-.lightboxStage img,
-.lightboxStage video{
-  max-width: 100%;
-  max-height: 100%;
-  border-radius: 14px;
-  border: 1px solid rgba(255,255,255,.12);
-  background:#0f1116;
+.workFloatingTop.show{
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
 }
 
-.lightboxClose{
-  position:absolute;
-  top:14px;
-  right:14px;
-  width:44px;
-  height:44px;
-  border-radius: 12px;
-  border:1px solid rgba(255,255,255,.25);
-  background: rgba(27,31,43,.7);
-  color:#fff;
-  font-size: 18px;
-  cursor:pointer;
+/* =====================================================
+   07. Responsive - Tablet
+===================================================== */
+@media (max-width: 1024px){
+  .workIntro{
+    padding: 64px 0 46px;
+  }
+
+  .workMetaGrid{
+    gap: 28px;
+  }
+
+  .workCategory{
+    font-size: 1.4rem;
+  }
+
+  .workClient{
+    font-size: 1.5rem;
+  }
+
+  .workMetaLabel{
+    font-size: 1rem;
+  }
+
+  .workMetaValue{
+    font-size: 1.1rem;
+  }
 }
 
-.lightboxNav{
-  position:absolute;
-  top:50%;
-  transform: translateY(-50%);
-  width:44px;
-  height:44px;
-  border-radius: 12px;
-  border:1px solid rgba(255,255,255,.25);
-  background: rgba(27,31,43,.55);
-  color:#fff;
-  font-size: 30px;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.lightboxNav--prev{ left:14px; }
-.lightboxNav--next{ right:14px; }
+/* =====================================================
+   08. Responsive - Mobile
+===================================================== */
+@media (max-width: 768px){
+  .workContainer{
+    width: min(100% - 32px, var(--work-container));
+  }
 
-.lightboxCount{
-  position:absolute;
-  left:50%;
-  bottom:10px;
-  transform: translateX(-50%);
-  color: rgba(255,255,255,.75);
-  font-weight: 600;
-  font-size: .92rem;
+  .workTopBar{
+    padding-top: 18px;
+  }
+
+  .workIntro{
+    padding: 52px 0 40px;
+  }
+
+  .workCategory{
+    margin-bottom: 14px;
+    font-size: 1.1rem;
+  }
+
+  .workTitleGroup{
+    margin-bottom: 32px;
+  }
+
+  .workClient{
+    margin-bottom: 8px;
+    font-size: 1.2rem;
+  }
+
+  .workMainTitle{
+    font-size: 2rem;
+    line-height: 1.28;
+  }
+
+  .workMetaGrid{
+    grid-template-columns: 1fr;
+    gap: 22px;
+    margin-bottom: 40px;
+  }
+
+  .workMetaLabel{
+    margin-bottom: 6px;
+    font-size: 0.92rem;
+  }
+
+  .workMetaValue{
+    font-size: 1rem;
+  }
+
+  .workSectionSubTitle{
+    font-size: 1.45rem;
+  }
+
+  .workColorList{
+    gap: 14px;
+  }
+
+  .workColorDot{
+    width: 34px;
+    height: 34px;
+  }
+
+  .workDetailImageTitle{
+    font-size: 1.1rem;
+  }
+
+  .workFloatingTop{
+    right: 16px;
+    bottom: 16px;
+    width: 40px;
+    height: 40px;
+  }
+
+  .workFloatingTop img{
+    width: 14px;
+    height: 14px;
+  }
 }

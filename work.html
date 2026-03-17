@@ -1,59 +1,109 @@
 <!doctype html>
 <html lang="ko">
 <head>
+  <!-- =====================================================
+       01. Meta / Title
+  ====================================================== -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Work | So Young</title>
+  <title>Portfolio Detail</title>
+
+  <!-- =====================================================
+       02. Pretendard Font
+  ====================================================== -->
+  <link rel="stylesheet" crossorigin
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
+
+  <!-- =====================================================
+       03. Work CSS
+  ====================================================== -->
   <link rel="stylesheet" href="./css/work.css" />
 </head>
 
 <body>
-  <header class="workHeader">
-    <div class="container headerRow">
-      <a class="brand" href="index.html#portfolio" aria-label="포트폴리오로 돌아가기">← Back</a>
-      <div class="headerTitleWrap">
-        <h1 id="workTitle" class="workTitle">Work</h1>
-        <p id="workSubtitle" class="workSubtitle"></p>
+  <main class="workDetailPage" id="top">
+    <!-- =====================================================
+         04. Top Bar
+         - 뒤로가기 버튼
+         - Portfolio 텍스트
+    ====================================================== -->
+    <section class="workTopBar">
+      <div class="workContainer workTopBarInner">
+        <button class="workBackBtn" type="button" id="backBtn" aria-label="뒤로가기">
+          <img src="./images/profile/ioc/Expand_left.png" alt="" aria-hidden="true" />
+        </button>
+        <span class="workTopLabel">Portfolio</span>
       </div>
-    </div>
-  </header>
+    </section>
 
-  <main class="workMain">
-    <div class="container">
-      <!-- Meta -->
-      <section class="metaRow" aria-label="작업 정보">
-        <div class="metaBox" id="workTool">Tool : -</div>
-        <div class="metaBox" id="workContribution">Contribution : -</div>
-        <div class="metaBox" id="workType">Type : -</div>
-      </section>
+    <!-- =====================================================
+         05. Work Intro
+         - 카테고리
+         - 클라이언트
+         - 제목
+         - 메타 정보
+         - 컬러칩
+    ====================================================== -->
+    <section class="workIntro">
+      <div class="workContainer">
+        <p class="workCategory" id="workCategory">E-commerce / Promotion</p>
 
-      <!-- Notice -->
-      <div class="notice" id="workNotice" hidden></div>
+        <div class="workTitleGroup">
+          <p class="workClient" id="workClient">[현대디에프]</p>
+          <h1 class="workMainTitle" id="workTitle">프로젝트 제목</h1>
+        </div>
 
-      <!-- Gallery -->
-      <section class="gallery" aria-label="작업 이미지 갤러리">
-        <div class="galleryGrid" id="galleryGrid"></div>
-      </section>
-    </div>
+        <div class="workMetaGrid">
+          <div class="workMetaItem">
+            <span class="workMetaLabel">ROLE</span>
+            <p class="workMetaValue" id="workRole">Detailed Page, Graphic</p>
+          </div>
+
+          <div class="workMetaItem">
+            <span class="workMetaLabel">CONTRIBUTION</span>
+            <p class="workMetaValue" id="workContribution">100%</p>
+          </div>
+
+          <div class="workMetaItem">
+            <span class="workMetaLabel">TOOLS</span>
+            <p class="workMetaValue" id="workTools">PS / FIGMA</p>
+          </div>
+        </div>
+
+        <div class="workColorSection">
+          <h2 class="workSectionSubTitle">Color</h2>
+          <div class="workColorList" id="workColors"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =====================================================
+         06. Detailed Image
+         - PC / MO 반응형 상세 이미지
+         - gif / video도 확장 가능
+    ====================================================== -->
+    <section class="workImageSection">
+      <div class="workContainer workImageContainer">
+        <h2 class="workSectionSubTitle workDetailImageTitle">Detailed Image</h2>
+      </div>
+
+      <div class="workFullImageWrap" id="workFullImageWrap"></div>
+    </section>
+
+    <!-- =====================================================
+         07. Top Button
+    ====================================================== -->
+    <a class="workFloatingTop" href="#top" aria-label="맨 위로" id="workTopBtn">
+      <img src="./images/profile/ioc/Expand_up.png" alt="" aria-hidden="true" />
+    </a>
   </main>
 
-  <!-- Lightbox -->
-  <div class="lightbox" id="lightbox" aria-hidden="true">
-    <div class="lightboxBackdrop" data-close="true" aria-hidden="true"></div>
-
-    <div class="lightboxDialog" role="dialog" aria-modal="true" aria-label="이미지 크게 보기">
-      <button class="lightboxClose" type="button" aria-label="닫기" data-close="true">✕</button>
-
-      <button class="lightboxNav lightboxNav--prev" type="button" aria-label="이전" data-prev>‹</button>
-      <button class="lightboxNav lightboxNav--next" type="button" aria-label="다음" data-next>›</button>
-
-      <div class="lightboxStage" id="lightboxStage"></div>
-      <div class="lightboxCount" id="lightboxCount">1 / 1</div>
-    </div>
-  </div>
-
-  <!-- ⚠️ data.js가 work.js보다 먼저 -->
-  <script src="./js/data.js"></script>
+  <!-- =====================================================
+       08. JS
+       - 상세 데이터 먼저
+       - 상세 로직 나중
+  ====================================================== -->
+  <script src="./js/workdata.js"></script>
   <script src="./js/work.js"></script>
 </body>
 </html>
