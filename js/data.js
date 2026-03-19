@@ -115,7 +115,7 @@ const portfolioData = [
   {
     id: "hyundai-jejuair",
     category: "detail",
-    title: "현대디에프 제주항공 프로모션 이벤트",
+    title: "[현대디에프] 제주항공 프로모션 이벤트",
     desc: "현대디에프 내 최대 행사 현데이 프로젝트에 오픈하는 제주항공 왕복 항공권 추첨 이벤트 제작",
     thumb: "./images/portfilo/thumb/thumb_jeju_air.jpg",
     tool: "PS / FIGMA",
@@ -125,7 +125,7 @@ const portfolioData = [
   {
     id: "hyundai-newsub",
     category: "detail",
-    title: "현대디에프 신규가입 프로모션 페이지",
+    title: "[현대디에프] 신규가입 프로모션 페이지",
     desc: "현대디에프 신규가입 유도를 위한 이벤트 페이지",
     thumb: "./images/portfilo/thumb/thumb_new_sub.jpg",
     tool: "PS / FIGMA",
@@ -145,7 +145,7 @@ const portfolioData = [
   {
     id: "hyundai-wedding",
     category: "detail",
-    title: "현대디에프 웨딩 인증 고객 혜택 페이지",
+    title: "[현대디에프] 웨딩 인증 고객 혜택 페이지",
     desc: "곧 결혼하는 예비 부부들을 위한 웨딩 인증 고객 혜택 페이지",
     thumb: "./images/portfilo/thumb/thumb_wedding.jpg",
     tool: "FIGMA",
