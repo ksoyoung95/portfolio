@@ -143,15 +143,45 @@ const portfolioData = [
     type: "E-commerce"
   },
   {
-    id: "hyundai-wedding",
+    id: "hyundai-aibeauty",
     category: "detail",
-    title: "[현대디에프] 웨딩 인증 고객 혜택 페이지",
-    desc: "곧 결혼하는 예비 부부들을 위한 웨딩 인증 고객 혜택 페이지",
-    thumb: "./images/portfilo/thumb/thumb_wedding.jpg",
-    tool: "FIGMA",
+    title: "[현대디에프] AI 뷰티트립 프로모션 이벤트",
+    desc: "현대면세점 무역점에서 진행하는 팝업 행사 안내 페이지",
+    thumb: "./images/portfilo/thumb/thumb_aibeauty.jpg",
+    tool: "FIGMA / PS",
     contribution: "100%",
     type: "E-commerce"
-  }
+  },
+  {
+  id: "soundbone-film",
+  category: "video", // detail | uiux | ads | video
+  title: "[사운드본] 사운드 본질을 말하다.",
+  desc: "SE01 제품 브랜딩 영상",
+  thumb: "./images/portfilo/thumb/thumb_soundbone.jpg",
+  tool: "Premier Pro / After Effect",
+  contribution: "100%",
+  type: "Branding"
+ },
+ {
+  id: "project-id",
+  category: "detail", // detail | uiux | ads | video
+  title: "프로젝트명",
+  desc: "설명",
+  thumb: "./images/portfilo/thumb/thumb_xxx.jpg",
+  tool: "PS / FIGMA",
+  contribution: "100%",
+  type: "E-commerce"
+},
+{
+  id: "project-id",
+  category: "detail", // detail | uiux | ads | video
+  title: "프로젝트명",
+  desc: "설명",
+  thumb: "./images/portfilo/thumb/thumb_xxx.jpg",
+  tool: "PS / FIGMA",
+  contribution: "100%",
+  type: "E-commerce"
+}
 ];
 
 /** ---------- Expose Global ---------- */
