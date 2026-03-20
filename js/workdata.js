@@ -89,7 +89,7 @@ const workDetailData = [
     contribution: "100%",
     tools: "PS / FIGMA",
     hideColor: false,
-    colors: ["#2B83D0", "#F4A729", "#DCE8FA"],
+    colors: ["#2B83D0", "#FAF729", "#DCE8FA"],
     detailMedia: [
       {
         type: "responsive-image",
@@ -127,7 +127,7 @@ const workDetailData = [
     title: "현대디에프 AI 뷰티트립 프로모션 이벤트",
     role: "Detailed Page, Graphic",
     contribution: "100%",
-    tools: "FIGMA",
+    tools: "FIGMA / AI / PS",
     hideColor: false,
     colors: ["#000000", "#1D67C2", "#FFFFFF"],
     detailMedia: [
