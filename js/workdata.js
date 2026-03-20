@@ -133,7 +133,7 @@ const workDetailData = [
     detailMedia: [
       {
         type: "responsive-image",
-        pc: "./images/portfilo/detail_page/pc_aibeauty.jpg",
+        pc: "./images/portfilo/detail_page/PC_aibeauty.jpg",
         mo: "./images/portfilo/detail_page/mo_aibeauty.jpg",
         alt: "현대면세점 무역점에서 진행하는 팝업 행사 안내 페이지"
       }

@@ -1,6 +1,8 @@
 /* ==========================
    MAIN PAGE LOGIC
    - index.html 전용
+   - 전체 탭: 랜덤 노출
+   - 카테고리 탭: data.js 순서 유지
 ========================== */
 
 /** ---------- Helpers ---------- */
@@ -10,6 +12,17 @@ function qs(sel, el = document) {
 
 function qsa(sel, el = document) {
   return [...el.querySelectorAll(sel)];
+}
+
+function shuffleArray(array) {
+  const copied = [...array];
+
+  for (let i = copied.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [copied[i], copied[j]] = [copied[j], copied[i]];
+  }
+
+  return copied;
 }
 
 /** ---------- Modal ---------- */
@@ -99,7 +112,9 @@ function initCareerModal() {
     qs("#careerModalTitle").textContent = item.company;
     qs("#careerModalTag").textContent = item.tag;
     qs("#careerModalPeriod").textContent = item.period;
-    qs("#careerModalTasks").innerHTML = (item.tasks || []).map((task) => `<li>${task}</li>`).join("");
+    qs("#careerModalTasks").innerHTML = (item.tasks || [])
+      .map((task) => `<li>${task}</li>`)
+      .join("");
 
     openModal(modal);
   });
@@ -108,15 +123,30 @@ function initCareerModal() {
 /** ---------- Portfolio ---------- */
 let activeFilter = "all";
 let visibleCount = 4;
+let shuffledAllWorks = [];
 
-function getFilteredWorks() {
+function getValidWorks() {
   if (!Array.isArray(window.portfolioData)) return [];
 
-  const validWorks = window.portfolioData.filter((w) => {
+  return window.portfolioData.filter((w) => {
     return w.id && w.title && w.desc && w.thumb;
   });
+}
 
-  if (activeFilter === "all") return validWorks;
+function resetAllShuffle() {
+  shuffledAllWorks = shuffleArray(getValidWorks());
+}
+
+function getFilteredWorks() {
+  const validWorks = getValidWorks();
+
+  if (activeFilter === "all") {
+    if (!shuffledAllWorks.length) {
+      shuffledAllWorks = shuffleArray(validWorks);
+    }
+    return shuffledAllWorks;
+  }
+
   return validWorks.filter((w) => w.category === activeFilter);
 }
 
@@ -160,6 +190,11 @@ function initPortfolio() {
 
       activeFilter = btn.dataset.filter;
       visibleCount = 4;
+
+      if (activeFilter === "all") {
+        resetAllShuffle();
+      }
+
       renderPortfolio();
     });
   });
@@ -192,7 +227,10 @@ document.addEventListener("DOMContentLoaded", () => {
   initMobileNav();
   renderCareers();
   initCareerModal();
+
+  resetAllShuffle();
   renderPortfolio();
   initPortfolio();
+
   initTopButton();
 });
