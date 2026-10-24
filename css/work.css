@@ -678,3 +678,207 @@ a{
     height: 14px;
   }
 }
+
+
+/* ---------- 99-1. 공통 / 접근성 ---------- */
+[hidden]{
+  display: none !important;
+}
+
+body{
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+
+:focus-visible{
+  outline: 3px solid #111111;
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after{
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- 99-2. 상단 바 (터치 영역 확대) ---------- */
+.workBackBtn{
+  width: 44px;
+  height: 44px;
+  margin-left: -10px;
+  border-radius: 12px;
+  transition: background 0.2s ease;
+}
+
+.workBackBtn:hover{
+  background: #efefef;
+}
+
+/* ---------- 99-3. 글자 대비 개선 ---------- */
+.workMetaLabel{
+  color: #6f6f6f; /* #B8B8B8 → 대비 약 1.9:1 에서 4.9:1 */
+}
+
+.workColorCode{
+  font-size: 0.75rem; /* 0.68rem(약 11px) → 12px */
+  color: #555555;
+}
+
+/* ---------- 99-4. 현데이 탭: 고정 + 활성 상태 구분 ---------- */
+#workTabSection.isHyundayTab{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+#workTabSection.isHyundayTab .workTabButton{
+  min-height: 56px;
+  transition: color 0.15s ease;
+}
+
+/* 비활성(진갈색) / 활성(흰색 + 밑줄) 로 확실히 구분 */
+#workTabSection.isHyundayTab .workTabButton.isActive,
+#workTabSection.isHyundayTab .workTabButton.isActive:hover{
+  color: #ffffff;
+}
+
+#workTabSection.isHyundayTab .workTabButton.isActive::before{
+  content: "";
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 8px;
+  height: 3px;
+  border-radius: 2px;
+  background: #ffffff;
+}
+
+/* 뷰티 프리위크 탭도 고정하고 싶다면 아래 주석을 해제하세요 (탭 높이가 커서 기본은 비고정)
+#workTabSection.isBeautyTab{
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+*/
+
+#workTabSection .workTabButton:focus-visible{
+  outline-color: #ffffff;
+  outline-offset: -4px;
+}
+
+.workVideoPlayButton:focus-visible{
+  outline-offset: -6px;
+  outline-color: #ffffff;
+}
+
+/* ---------- 99-5. 이전/다음 프로젝트 + 문의 ---------- */
+.workPagerSection{
+  padding: 72px 0 96px;
+  border-top: 1px solid var(--work-line);
+}
+
+.workPager{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.workPagerLink{
+  display: grid;
+  gap: 6px;
+  padding: 20px 22px;
+  background: #ffffff;
+  border: 1px solid var(--work-line);
+  border-radius: 16px;
+  transition: border-color 0.2s ease, transform 0.2s ease;
+}
+
+.workPagerLink:hover{
+  border-color: #111111;
+  transform: translateY(-2px);
+}
+
+.workPagerLink.isNext{
+  text-align: right;
+}
+
+.workPagerLabel{
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #6f6f6f;
+}
+
+.workPagerTitle{
+  font-size: 1.05rem;
+  font-weight: 800;
+  line-height: 1.4;
+  letter-spacing: -0.02em;
+}
+
+.workPagerActions{
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.workActionBtn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-weight: 800;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.workActionBtn.isPrimary{
+  background: #111111;
+  color: #ffffff;
+}
+
+.workActionBtn.isPrimary:hover{
+  background: #333333;
+}
+
+.workActionBtn.isGhost{
+  background: #ffffff;
+  border: 1px solid #cfcfcf;
+}
+
+.workActionBtn.isGhost:hover{
+  border-color: #111111;
+}
+
+.workFloatingTop:hover{
+  background: #e3e3e3;
+}
+
+@media (max-width: 768px){
+  .workPager{
+    grid-template-columns: 1fr;
+  }
+
+  .workPagerLink.isNext{
+    text-align: left;
+  }
+
+  .workPagerSection{
+    padding: 56px 0 72px;
+  }
+
+  #workTabSection.isHyundayTab .workTabButton.isActive::before{
+    left: 18px;
+    right: 18px;
+  }
+}

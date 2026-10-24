@@ -2,6 +2,8 @@
    WORK DETAIL LOGIC ONLY
    - 일반 상세 이미지 / 영상 / 탭형 상세페이지 모두 지원
    - layout: "contained" 지원
+   - 탭 접근성(키보드 이동) + 탭 상태 URL 저장(?tab=)
+   - 이전/다음 프로젝트 이동
 ========================== */
 
 /* =====================================================
@@ -15,13 +17,43 @@ function qsa(sel, el = document) {
   return [...el.querySelectorAll(sel)];
 }
 
+function esc(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (ch) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  }[ch]));
+}
+
 function getQueryId() {
   const params = new URLSearchParams(window.location.search);
   return (params.get("id") || "").trim();
 }
 
+function getQueryTab() {
+  const params = new URLSearchParams(window.location.search);
+  return (params.get("tab") || "").trim();
+}
+
 function isArrayWithItems(value) {
   return Array.isArray(value) && value.length > 0;
+}
+
+/* "[현대디에프]" → "현대디에프" (데이터에 대괄호가 있어도 화면엔 깔끔하게) */
+function stripBrackets(text) {
+  return String(text || "").replace(/^\s*\[(.*)\]\s*$/, "$1").trim();
+}
+
+function getListUrl() {
+  let search = "";
+  try {
+    search = sessionStorage.getItem("portfolioListSearch") || "";
+  } catch (err) {
+    /* 무시 */
+  }
+  return `./index.html${search}#portfolio`;
 }
 
 /* =====================================================
@@ -29,13 +61,27 @@ function isArrayWithItems(value) {
 ===================================================== */
 function initBackButton() {
   const backBtn = qs("#backBtn");
+  const listLink = qs("#listLink");
+
+  if (listLink) listLink.setAttribute("href", getListUrl());
   if (!backBtn) return;
 
   backBtn.addEventListener("click", () => {
-    if (window.history.length > 1) {
+    let ref = null;
+    try {
+      ref = document.referrer ? new URL(document.referrer) : null;
+    } catch (err) {
+      ref = null;
+    }
+
+    // 내 사이트의 목록에서 왔을 때만 history.back (외부 링크/다른 작업에서 왔으면 목록으로 이동)
+    const fromOwnList =
+      ref && ref.origin === window.location.origin && !/work\.html$/.test(ref.pathname);
+
+    if (fromOwnList && window.history.length > 1) {
       window.history.back();
     } else {
-      window.location.href = "./index.html#portfolio";
+      window.location.href = getListUrl();
     }
   });
 }
@@ -74,6 +120,7 @@ function createImageNode(src, altText) {
   img.src = src;
   img.alt = altText || "";
   img.loading = "lazy";
+  img.decoding = "async";
   return img;
 }
 
@@ -106,6 +153,10 @@ function createVideoNode(item) {
   video.playsInline = true;
   video.preload = "metadata";
   video.controls = false;
+  video.setAttribute("aria-label", item.alt || "포트폴리오 영상");
+
+  // workdata.js 영상 항목에 poster: "경로" 를 넣으면 재생 전 썸네일로 사용됩니다.
+  if (item.poster) video.poster = item.poster;
 
   const playButton = document.createElement("button");
   playButton.type = "button";
@@ -165,6 +216,12 @@ function createMediaNode(item) {
   }
 }
 
+/* 첫 화면에 보이는 첫 이미지는 lazy 로딩하지 않음 */
+function eagerFirstImage(wrap) {
+  const first = qs("img", wrap);
+  if (first) first.loading = "eager";
+}
+
 /* =====================================================
    04. Text Render
 ===================================================== */
@@ -177,9 +234,14 @@ function renderTextContent(work) {
   const contributionEl = qs("#workContribution");
   const toolsEl = qs("#workTools");
 
+  const cleanTitle = stripBrackets(work.title);
+
   if (categoryEl) categoryEl.textContent = work.category || "";
-  if (clientEl) clientEl.textContent = work.client || "";
-  if (titleEl) titleEl.textContent = work.title || "";
+  if (clientEl) clientEl.textContent = stripBrackets(work.client);
+  if (titleEl) titleEl.textContent = cleanTitle;
+
+  // 탭 제목 / 공유 시 제목을 프로젝트명으로
+  if (cleanTitle) document.title = `${cleanTitle} | 강소영 포트폴리오`;
 
   if (subTextEl) {
     if (work.subText) {
@@ -256,6 +318,13 @@ function renderDetailTitle(work) {
   }
 }
 
+/* 일반 상세 이미지가 없는 작업(탭형)은 섹션 자체를 숨겨 불필요한 빈 여백 제거 */
+function renderDetailSection(work) {
+  const section = qs(".workImageSection");
+  if (!section) return;
+  section.hidden = !isArrayWithItems(work.detailMedia);
+}
+
 function renderDetailMedia(work) {
   const detailWrap = qs("#workFullImageWrap");
   if (!detailWrap) return;
@@ -266,6 +335,8 @@ function renderDetailMedia(work) {
     const node = createMediaNode(media);
     if (node) detailWrap.appendChild(node);
   });
+
+  eagerFirstImage(detailWrap);
 }
 
 /* =====================================================
@@ -293,6 +364,8 @@ function renderHeroMedia(work) {
     const node = createMediaNode(media);
     if (node) heroWrap.appendChild(node);
   });
+
+  eagerFirstImage(heroWrap);
 }
 
 function renderTabContent(tab) {
@@ -307,56 +380,120 @@ function renderTabContent(tab) {
   });
 }
 
+/* 탭 활성화: 표시 상태 / ARIA / 콘텐츠 교체 / URL / 스크롤 보정 */
+function setActiveTab(work, tabId, options = {}) {
+  const { fromUser = false, focus = false } = options;
+
+  const tabNav = qs("#workTabNav");
+  const tabSection = qs("#workTabSection");
+  const contentSection = qs("#workTabContentSection");
+  const panel = qs("#workTabContent");
+  const sections = work.tabSections || [];
+
+  const target = sections.find((tab) => tab.id === tabId) || sections[0];
+  if (!target || !tabNav || !panel) return;
+
+  qsa(".workTabButton", tabNav).forEach((btn) => {
+    const on = btn.dataset.tabId === target.id;
+
+    btn.classList.toggle("isActive", on);
+    btn.setAttribute("aria-selected", String(on));
+    btn.tabIndex = on ? 0 : -1;
+
+    if (on) {
+      panel.setAttribute("aria-labelledby", btn.id);
+      if (focus) btn.focus();
+      if (fromUser) btn.scrollIntoView({ block: "nearest", inline: "center" });
+    }
+  });
+
+  renderTabContent(target);
+
+  if (!fromUser) return;
+
+  // 선택한 탭을 주소에 기록 (공유/새로고침 시 같은 탭이 열림)
+  const url = new URL(window.location.href);
+  url.searchParams.set("tab", target.id);
+  window.history.replaceState(null, "", url);
+
+  // 긴 이미지를 보다가 탭을 바꿨다면 새 콘텐츠의 시작 위치로 이동
+  const isSticky = tabSection && window.getComputedStyle(tabSection).position === "sticky";
+  const ref = isSticky ? contentSection : tabSection;
+  const offset = isSticky ? tabSection.offsetHeight : 0;
+
+  if (ref) {
+    const top = ref.getBoundingClientRect().top;
+    if (top < offset) {
+      window.scrollTo({ top: window.scrollY + top - offset, behavior: "smooth" });
+    }
+  }
+}
+
 function renderTabNav(work) {
   const tabNav = qs("#workTabNav");
   const tabSection = qs("#workTabSection");
+  const panel = qs("#workTabContent");
   if (!tabNav || !tabSection) return;
 
   const sections = work.tabSections || [];
 
   tabSection.classList.remove("isHyundayTab", "isBeautyTab");
+  tabSection.classList.add(work.tabStyle === "beauty" ? "isBeautyTab" : "isHyundayTab");
 
-  if (work.tabStyle === "beauty") {
-    tabSection.classList.add("isBeautyTab");
-  } else {
-    tabSection.classList.add("isHyundayTab");
-  }
+  tabNav.setAttribute("role", "tablist");
+  tabNav.setAttribute("aria-label", "상세 카테고리");
+  if (panel) panel.setAttribute("role", "tabpanel");
 
-  tabNav.innerHTML = sections.map((tab, index) => `
+  tabNav.innerHTML = sections.map((tab) => `
     <button
-      class="workTabButton ${index === 0 ? "isActive" : ""}"
+      class="workTabButton"
       type="button"
-      data-tab-id="${tab.id}">
+      role="tab"
+      id="tabBtn-${esc(tab.id)}"
+      data-tab-id="${esc(tab.id)}"
+      aria-controls="workTabContent"
+      aria-selected="false"
+      tabindex="-1">
       ${
         work.tabStyle === "beauty"
           ? `
-            <span class="workTabTopLabel">${tab.topLabel || ""}</span>
-            <span class="workTabMainLabel">${tab.label}</span>
+            <span class="workTabTopLabel">${esc(tab.topLabel || "")}</span>
+            <span class="workTabMainLabel">${esc(tab.label)}</span>
           `
           : `
-            <span class="workTabSingleLabel">${tab.label}</span>
+            <span class="workTabSingleLabel">${esc(tab.label)}</span>
           `
       }
     </button>
   `).join("");
 
-  if (sections.length) {
-    renderTabContent(sections[0]);
-  }
+  // 첫 렌더: ?tab= 값이 있으면 그 탭, 없으면 첫 번째 탭
+  setActiveTab(work, getQueryTab());
 
   tabNav.onclick = (e) => {
     const btn = e.target.closest("[data-tab-id]");
     if (!btn) return;
+    setActiveTab(work, btn.dataset.tabId, { fromUser: true });
+  };
 
-    const targetTab = sections.find((tab) => tab.id === btn.dataset.tabId);
-    if (!targetTab) return;
+  // 키보드: ← → Home End 로 탭 이동
+  tabNav.onkeydown = (e) => {
+    const keys = ["ArrowRight", "ArrowLeft", "Home", "End"];
+    if (!keys.includes(e.key)) return;
 
-    qsa(".workTabButton", tabNav).forEach((button) => {
-      button.classList.remove("isActive");
-    });
+    const buttons = qsa(".workTabButton", tabNav);
+    const current = buttons.indexOf(document.activeElement);
+    if (current < 0) return;
 
-    btn.classList.add("isActive");
-    renderTabContent(targetTab);
+    e.preventDefault();
+
+    let next = current;
+    if (e.key === "ArrowRight") next = (current + 1) % buttons.length;
+    if (e.key === "ArrowLeft") next = (current - 1 + buttons.length) % buttons.length;
+    if (e.key === "Home") next = 0;
+    if (e.key === "End") next = buttons.length - 1;
+
+    setActiveTab(work, buttons[next].dataset.tabId, { fromUser: true, focus: true });
   };
 }
 
@@ -372,19 +509,49 @@ function renderTabTypeWork(work) {
 }
 
 /* =====================================================
-   08. Fallback
+   08. Prev / Next
+===================================================== */
+function renderPager(work) {
+  const pager = qs("#workPager");
+  if (!pager) return;
+
+  const list = window.workDetailData;
+
+  if (!Array.isArray(list) || list.length < 2) {
+    pager.hidden = true;
+    return;
+  }
+
+  const index = list.findIndex((item) => item.id === work.id);
+  const prev = list[(index - 1 + list.length) % list.length];
+  const next = list[(index + 1) % list.length];
+
+  const link = (item, cls, label) => `
+    <a class="workPagerLink ${cls}" href="./work.html?id=${encodeURIComponent(item.id)}">
+      <span class="workPagerLabel">${label}</span>
+      <strong class="workPagerTitle">${esc(stripBrackets(item.title))}</strong>
+    </a>`;
+
+  pager.innerHTML =
+    link(prev, "isPrev", "← 이전 프로젝트") +
+    link(next, "isNext", "다음 프로젝트 →");
+}
+
+/* =====================================================
+   09. Fallback
 ===================================================== */
 function renderWorkNotFound() {
+  document.title = "작업을 찾을 수 없습니다 | 강소영 포트폴리오";
   document.body.innerHTML = `
     <main style="padding:40px;font-family:'Pretendard Variable', Pretendard, system-ui, sans-serif;background:#FCFCFC;min-height:100vh;">
       <p style="margin:0 0 12px;font-size:20px;font-weight:700;">작업 정보를 찾을 수 없습니다.</p>
-      <a href="./index.html#portfolio" style="color:#111;text-decoration:underline;">포트폴리오로 돌아가기</a>
+      <a href="${getListUrl()}" style="color:#111;text-decoration:underline;">포트폴리오로 돌아가기</a>
     </main>
   `;
 }
 
 /* =====================================================
-   09. Main Render
+   10. Main Render
 ===================================================== */
 function renderWorkDetail() {
   const id = getQueryId();
@@ -404,12 +571,14 @@ function renderWorkDetail() {
   renderTextContent(work);
   renderColorSection(work);
   renderDetailTitle(work);
+  renderDetailSection(work);
   renderDetailMedia(work);
   renderTabTypeWork(work);
+  renderPager(work);
 }
 
 /* =====================================================
-   10. Init
+   11. Init
 ===================================================== */
 document.addEventListener("DOMContentLoaded", () => {
   initBackButton();

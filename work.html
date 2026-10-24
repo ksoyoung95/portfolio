@@ -1,42 +1,32 @@
 <!doctype html>
 <html lang="ko">
+
 <head>
-  <!-- =====================================================
-       01. Meta / Title
-  ====================================================== -->
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Portfolio Detail</title>
+  <title>작업 상세 | 강소영 포트폴리오</title>
+  <meta name="description" content="강소영 포트폴리오 작업 상세 페이지" />
 
-  <!-- =====================================================
-       02. Pretendard Font
-  ====================================================== -->
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
   <link rel="stylesheet" crossorigin
-    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.min.css" />
-
-  <!-- =====================================================
-       03. Work CSS
-  ====================================================== -->
+    href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
   <link rel="stylesheet" href="./css/work.css" />
 </head>
 
 <body>
   <main class="workDetailPage" id="top">
-    <!-- =====================================================
-         04. 상단 바
-    ====================================================== -->
+
+    <!-- 상단 바 -->
     <section class="workTopBar">
       <div class="workContainer workTopBarInner">
-        <button class="workBackBtn" type="button" id="backBtn" aria-label="뒤로가기">
+        <button class="workBackBtn" type="button" id="backBtn" aria-label="포트폴리오 목록으로 돌아가기">
           <img src="./images/profile/ioc/Expand_left.png" alt="" aria-hidden="true" />
         </button>
         <span class="workTopLabel">Portfolio</span>
       </div>
     </section>
 
-    <!-- =====================================================
-         05. 프로젝트 기본 정보
-    ====================================================== -->
+    <!-- 프로젝트 기본 정보 -->
     <section class="workIntro">
       <div class="workContainer">
         <p class="workCategory" id="workCategory"></p>
@@ -52,12 +42,10 @@
             <span class="workMetaLabel">ROLE</span>
             <p class="workMetaValue" id="workRole"></p>
           </div>
-
           <div class="workMetaItem">
             <span class="workMetaLabel">CONTRIBUTION</span>
             <p class="workMetaValue" id="workContribution"></p>
           </div>
-
           <div class="workMetaItem">
             <span class="workMetaLabel">TOOLS</span>
             <p class="workMetaValue" id="workTools"></p>
@@ -71,24 +59,15 @@
       </div>
     </section>
 
-    <!-- =====================================================
-         06. 일반 상세 이미지 제목
-         - 일반 work는 사용
-         - 탭형 / 영상형은 JS에서 숨김
-    ====================================================== -->
+    <!-- 일반 상세 이미지 (상세 이미지가 없는 탭형 작업은 JS에서 섹션째 숨김) -->
     <section class="workImageSection">
       <div class="workContainer workImageContainer">
         <h2 class="workSectionSubTitle workDetailImageTitle">Detailed Image</h2>
       </div>
-
       <div class="workFullImageWrap" id="workFullImageWrap"></div>
     </section>
 
-    <!-- =====================================================
-         07. 탭형 상세페이지 전용
-         - heroMedia: 상단 고정 키비주얼
-         - tabSections: HTML 탭 + 하단 교체 콘텐츠
-    ====================================================== -->
+    <!-- 탭형 상세페이지 -->
     <section class="workHeroSection" id="workHeroSection">
       <div id="workHeroWrap"></div>
     </section>
@@ -101,18 +80,25 @@
       <div id="workTabContent"></div>
     </section>
 
-    <!-- =====================================================
-         08. 상단 이동 버튼
-    ====================================================== -->
+    <!-- 이전/다음 프로젝트 + 문의 -->
+    <section class="workPagerSection">
+      <div class="workContainer">
+        <nav class="workPager" id="workPager" aria-label="다른 프로젝트"></nav>
+
+        <div class="workPagerActions">
+          <a class="workActionBtn isGhost" href="./index.html#portfolio" id="listLink">전체 포트폴리오 보기</a>
+          <a class="workActionBtn isPrimary" href="mailto:sydh0714@naver.com">프로젝트 문의하기</a>
+        </div>
+      </div>
+    </section>
+
     <a class="workFloatingTop" href="#top" aria-label="맨 위로" id="workTopBtn">
       <img src="./images/profile/ioc/Expand_up.png" alt="" aria-hidden="true" />
     </a>
   </main>
 
-  <!-- =====================================================
-       09. JS
-  ====================================================== -->
   <script src="./js/workdata.js"></script>
   <script src="./js/work.js"></script>
 </body>
+
 </html>

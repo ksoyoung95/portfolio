@@ -1038,3 +1038,354 @@ body.modalOpen{
     height: 16px;
   }
 }
+
+
+/* ---------- 99-1. 공통 / 접근성 ---------- */
+[hidden]{
+  display: none !important; /* '더 보기' 버튼이 hidden 인데도 남던 버그 해결 */
+}
+
+html{
+  scroll-padding-top: 88px; /* 고정 헤더에 섹션 제목이 가려지지 않게 */
+}
+
+body{
+  word-break: keep-all;        /* 한글 단어 중간에서 끊기지 않게 */
+  overflow-wrap: anywhere;
+}
+
+:focus-visible{
+  outline: 3px solid var(--primary);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+.srOnly{
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skipLink{
+  position: absolute;
+  left: 16px;
+  top: -56px;
+  z-index: 2000;
+  padding: 10px 16px;
+  background: #111111;
+  color: #ffffff;
+  border-radius: 8px;
+  font-weight: 700;
+}
+
+.skipLink:focus{
+  top: 12px;
+}
+
+@media (prefers-reduced-motion: reduce){
+  html{
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after{
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
+
+/* ---------- 99-2. Header / Nav ---------- */
+.navLink{
+  position: relative;
+  padding: 8px 0;
+  transition: color 0.2s ease;
+}
+
+.navLink::after{
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 2px;
+  height: 2px;
+  background: var(--primary);
+  transform: scaleX(0);
+  transition: transform 0.2s ease;
+}
+
+.navLink:hover::after,
+.navLink[aria-current="true"]::after{
+  transform: scaleX(1);
+}
+
+.navLink:hover,
+.navLink[aria-current="true"],
+.mobileNavLink:hover,
+.mobileNavLink[aria-current="true"]{
+  color: var(--primary);
+}
+
+.mobileNavLink{
+  padding: 14px 0;
+}
+
+@media (max-width: 768px){
+  .navToggle{
+    width: 44px;
+    height: 44px;
+    flex: 0 0 44px;
+  }
+}
+
+/* ---------- 99-3. Hero ---------- */
+.heroLine{
+  display: block; /* 의도한 줄 구분은 유지하되, 좁은 화면에서는 자연스럽게 줄바꿈 */
+}
+
+.heroTitle,
+.heroDesc{
+  text-wrap: balance;
+}
+
+/* 태블릿에서 32ch(한글 약 17자)로 문장이 과하게 꺾이던 문제 */
+@media (max-width: 1024px){
+  .heroDesc{
+    max-width: 40em;
+  }
+}
+
+/* 링크처럼 보이던 밑줄 → 클릭되지 않는 형광펜 강조로 */
+.heroAccent{
+  text-decoration: none;
+  padding: 0 2px;
+  background: linear-gradient(transparent 62%, var(--primary-soft) 62%);
+}
+
+.heroActions{
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 32px;
+}
+
+.heroBtn{
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 48px;
+  padding: 12px 24px;
+  border-radius: 12px;
+  font-size: 1rem;
+  font-weight: 800;
+  transition: background 0.2s ease, color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.heroBtnPrimary{
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.heroBtnPrimary:hover{
+  background: #2f5fae;
+}
+
+.heroBtnGhost{
+  background: #ffffff;
+  color: var(--text);
+  box-shadow: inset 0 0 0 1.5px #cfd6e0;
+}
+
+.heroBtnGhost:hover{
+  color: var(--primary);
+  box-shadow: inset 0 0 0 1.5px var(--primary);
+}
+
+@media (max-width: 1024px){
+  .heroActions{
+    justify-content: center;
+  }
+}
+
+/* ---------- 99-4. About ---------- */
+:root{
+  --about-card-height: 480px; /* 360px → 480px (내부 스크롤 구간을 줄임) */
+}
+
+.aboutFixedCard{
+  height: var(--about-card-height);
+  min-height: 0;
+}
+
+/* 스크롤 가능한 카드임을 알려주는 상/하단 그림자 */
+.aboutCardScroll{
+  overscroll-behavior: contain;
+  background:
+    linear-gradient(#ffffff 30%, rgba(255, 255, 255, 0)) center top,
+    linear-gradient(rgba(255, 255, 255, 0), #ffffff 70%) center bottom,
+    radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0)) center top,
+    radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0)) center bottom;
+  background-repeat: no-repeat;
+  background-size: 100% 36px, 100% 36px, 100% 12px, 100% 12px;
+  background-attachment: local, local, scroll, scroll;
+}
+
+/* 1열로 쌓이는 태블릿/모바일에서는 카드 안 스크롤 없이 전체 노출 (스크롤 중첩 제거) */
+@media (max-width: 1024px){
+  .aboutFixedCard{
+    height: auto;
+    min-height: 0;
+  }
+
+  .aboutCardScroll{
+    height: auto;
+    overflow: visible;
+    background: none;
+  }
+}
+
+.profileVal a{
+  color: var(--primary);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* 숙련도: 채워진 점 + 빈 점으로 "5점 만점 중 N점" 이 보이게 */
+.skillLevel span{
+  background: var(--primary);
+}
+
+.skillLevel::after{
+  content: "";
+  display: none;
+  height: 8px;
+  background: radial-gradient(circle at 4px 50%, #c5d1e6 0, #c5d1e6 4px, transparent 4.5px) 0 0 / 12px 8px repeat-x;
+}
+
+.skillLevel:has(span:nth-child(4):last-child)::after{ display: block; width: 8px; }
+.skillLevel:has(span:nth-child(3):last-child)::after{ display: block; width: 20px; }
+.skillLevel:has(span:nth-child(2):last-child)::after{ display: block; width: 32px; }
+.skillLevel:has(span:nth-child(1):last-child)::after{ display: block; width: 44px; }
+
+/* 경력 카드 */
+.careerMiniItem{
+  cursor: pointer;
+}
+
+.careerMiniTag{
+  font-size: 0.8rem;
+  color: #555555; /* 대비 개선 */
+}
+
+/* ---------- 99-5. Portfolio ---------- */
+.tab{
+  min-height: 44px;            /* 터치 영역 */
+  padding: 10px 18px;
+  color: #4a5a6e;              /* 대비 약 2:1 → 5:1 */
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.tab:hover{
+  background: #c9d2de;
+}
+
+.tab.isActive,
+.tab.isActive:hover{
+  background: var(--primary);
+  color: #ffffff;
+}
+
+.workBadge{
+  display: inline-block;
+  margin: 0 0 8px;
+  padding: 3px 10px;
+  border-radius: 999px;
+  background: var(--primary-soft);
+  color: #2d5aa6;
+  font-size: 0.75rem;
+  font-weight: 800;
+}
+
+.workMeta{
+  font-size: 0.82rem;
+}
+
+.emptyState{
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 48px 16px;
+  text-align: center;
+  color: var(--muted);
+}
+
+.moreBtn{
+  min-height: 48px;
+  transition: background 0.2s ease;
+}
+
+.moreBtn:hover{
+  background: #2f5fae;
+}
+
+.floatingTop:hover{
+  background: #c9ced6;
+}
+
+/* ---------- 99-6. Career Modal ---------- */
+.careerModalDialog{
+  max-height: calc(100dvh - 32px); /* 낮은 화면에서 잘리지 않게 */
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+/* ---------- 99-7. Contact / Footer ---------- */
+.contactSection{
+  background: var(--bg-section);
+  text-align: center;
+}
+
+.contactSection .sectionTitle{
+  margin-bottom: 20px;
+}
+
+.contactDesc{
+  margin: 0 0 24px;
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--muted);
+}
+
+.contactMail{
+  display: inline-block;
+  padding: 14px 28px;
+  border-radius: 12px;
+  background: var(--primary);
+  color: #ffffff;
+  font-size: 1.05rem;
+  font-weight: 800;
+  transition: background 0.2s ease;
+}
+
+.contactMail:hover{
+  background: #2f5fae;
+}
+
+.siteFooter{
+  padding: 28px 0;
+  background: #111111;
+  color: #bbbbbb;
+  text-align: center;
+  font-size: 0.85rem;
+}
+
+@media (max-width: 768px){
+  html{
+    scroll-padding-top: 76px;
+  }
+}

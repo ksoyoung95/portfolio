@@ -1,9 +1,20 @@
 /* ==========================
    MAIN PAGE LOGIC
    - index.html 전용
-   - 전체 탭: 랜덤 노출
-   - 카테고리 탭: data.js 순서 유지
+   - 전체 탭: SHUFFLE_ALL 값에 따라 랜덤 / 고정 순서
+   - 필터·더보기 상태는 URL(?cat=…&n=…)에 저장 → 상세에서 돌아와도 유지
+   - tool / contribution 은 workdata.js(상세 데이터)를 단일 출처로 사용
 ========================== */
+
+/** ---------- Config ---------- */
+const SHUFFLE_ALL = false; // true: '전체' 탭 랜덤 노출 / false: data.js 순서 고정
+const PAGE_SIZE = 4;
+const CATEGORY_LABEL = {
+  detail: "상세페이지",
+  uiux: "홈페이지",
+  ads: "광고",
+  video: "영상"
+};
 
 /** ---------- Helpers ---------- */
 function qs(sel, el = document) {
@@ -12,6 +23,16 @@ function qs(sel, el = document) {
 
 function qsa(sel, el = document) {
   return [...el.querySelectorAll(sel)];
+}
+
+function esc(value) {
+  return String(value ?? "").replace(/[&<>"']/g, (ch) => ({
+    "&": "&amp;",
+    "<": "&lt;",
+    ">": "&gt;",
+    '"': "&quot;",
+    "'": "&#39;"
+  }[ch]));
 }
 
 function shuffleArray(array) {
@@ -25,12 +46,18 @@ function shuffleArray(array) {
   return copied;
 }
 
-/** ---------- Modal ---------- */
+/** ---------- Modal (포커스 관리 포함) ---------- */
+let lastFocusedEl = null;
+
 function openModal(modalEl) {
   if (!modalEl) return;
+  lastFocusedEl = document.activeElement;
   modalEl.classList.add("isOpen");
   modalEl.setAttribute("aria-hidden", "false");
   document.body.classList.add("modalOpen");
+
+  const closeBtn = qs(".careerModalClose", modalEl);
+  if (closeBtn) closeBtn.focus();
 }
 
 function closeModal(modalEl) {
@@ -38,6 +65,40 @@ function closeModal(modalEl) {
   modalEl.classList.remove("isOpen");
   modalEl.setAttribute("aria-hidden", "true");
   document.body.classList.remove("modalOpen");
+
+  if (lastFocusedEl && typeof lastFocusedEl.focus === "function") {
+    lastFocusedEl.focus();
+  }
+  lastFocusedEl = null;
+}
+
+function trapFocus(e, modalEl) {
+  if (e.key !== "Tab") return;
+
+  const dialog = qs(".careerModalDialog", modalEl);
+  if (!dialog) return;
+
+  const focusables = qsa(
+    'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])',
+    dialog
+  );
+
+  if (!focusables.length) {
+    e.preventDefault();
+    dialog.focus();
+    return;
+  }
+
+  const first = focusables[0];
+  const last = focusables[focusables.length - 1];
+
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
 }
 
 function wireModalClose(modalEl) {
@@ -50,9 +111,14 @@ function wireModalClose(modalEl) {
   });
 
   document.addEventListener("keydown", (e) => {
-    if (e.key === "Escape" && modalEl.classList.contains("isOpen")) {
+    if (!modalEl.classList.contains("isOpen")) return;
+
+    if (e.key === "Escape") {
       closeModal(modalEl);
+      return;
     }
+
+    trapFocus(e, modalEl);
   });
 }
 
@@ -63,18 +129,88 @@ function initMobileNav() {
 
   if (!toggleBtn || !mobileNav) return;
 
+  const setOpen = (open) => {
+    toggleBtn.setAttribute("aria-expanded", String(open));
+    toggleBtn.setAttribute("aria-label", open ? "메뉴 닫기" : "메뉴 열기");
+    mobileNav.hidden = !open;
+  };
+
   toggleBtn.addEventListener("click", () => {
     const expanded = toggleBtn.getAttribute("aria-expanded") === "true";
-    toggleBtn.setAttribute("aria-expanded", String(!expanded));
-    mobileNav.hidden = expanded;
+    setOpen(!expanded);
   });
 
   mobileNav.addEventListener("click", (e) => {
-    if (e.target.closest("a")) {
-      toggleBtn.setAttribute("aria-expanded", "false");
-      mobileNav.hidden = true;
+    if (e.target.closest("a")) setOpen(false);
+  });
+
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape" && !mobileNav.hidden) {
+      setOpen(false);
+      toggleBtn.focus();
     }
   });
+
+  document.addEventListener("click", (e) => {
+    if (mobileNav.hidden) return;
+    if (e.target.closest(".navToggle") || e.target.closest(".mobileNav")) return;
+    setOpen(false);
+  });
+
+  // 화면이 데스크톱 폭이 되면 모바일 메뉴는 닫기
+  const mq = window.matchMedia("(min-width: 769px)");
+  const onChange = () => {
+    if (mq.matches) setOpen(false);
+  };
+  if (mq.addEventListener) mq.addEventListener("change", onChange);
+}
+
+/** ---------- Active Nav (현재 위치 표시) ---------- */
+function initActiveNav() {
+  const links = qsa(".navLink, .mobileNavLink");
+  const targets = ["about", "portfolio", "contact"]
+    .map((id) => document.getElementById(id))
+    .filter(Boolean);
+
+  if (!links.length || !targets.length || !("IntersectionObserver" in window)) return;
+
+  const setActive = (id) => {
+    links.forEach((a) => {
+      if (a.getAttribute("href") === "#" + id) {
+        a.setAttribute("aria-current", "true");
+      } else {
+        a.removeAttribute("aria-current");
+      }
+    });
+  };
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) setActive(entry.target.id);
+      });
+    },
+    { rootMargin: "-45% 0px -50% 0px" }
+  );
+
+  targets.forEach((el) => observer.observe(el));
+
+  window.addEventListener(
+    "scroll",
+    () => {
+      const atBottom =
+        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+
+      if (window.scrollY < 200) {
+        setActive("home");
+      } else if (atBottom) {
+        setActive("contact");
+      }
+    },
+    { passive: true }
+  );
+
+  setActive("home");
 }
 
 /** ---------- Career Render ---------- */
@@ -83,12 +219,12 @@ function renderCareers() {
   if (!grid || !Array.isArray(window.careerData)) return;
 
   grid.innerHTML = window.careerData.map((c) => `
-    <button class="careerMiniItem" type="button" data-career-id="${c.id}">
+    <button class="careerMiniItem" type="button" data-career-id="${esc(c.id)}" aria-haspopup="dialog">
       <div class="careerMiniTop">
-        <div class="careerMiniCompany">${c.company}</div>
-        <span class="careerMiniTag">${c.tag}</span>
+        <div class="careerMiniCompany">${esc(c.company)}</div>
+        <span class="careerMiniTag">${esc(c.tag)}</span>
       </div>
-      <div class="careerMiniPeriod">${c.period}</div>
+      <div class="careerMiniPeriod">${esc(c.period)}</div>
     </button>
   `).join("");
 }
@@ -113,7 +249,7 @@ function initCareerModal() {
     qs("#careerModalTag").textContent = item.tag;
     qs("#careerModalPeriod").textContent = item.period;
     qs("#careerModalTasks").innerHTML = (item.tasks || [])
-      .map((task) => `<li>${task}</li>`)
+      .map((task) => `<li>${esc(String(task).trim())}</li>`)
       .join("");
 
     openModal(modal);
@@ -122,8 +258,14 @@ function initCareerModal() {
 
 /** ---------- Portfolio ---------- */
 let activeFilter = "all";
-let visibleCount = 4;
+let visibleCount = PAGE_SIZE;
 let shuffledAllWorks = [];
+let detailMap = new Map();
+
+function buildDetailMap() {
+  const list = Array.isArray(window.workDetailData) ? window.workDetailData : [];
+  detailMap = new Map(list.map((d) => [d.id, d]));
+}
 
 function getValidWorks() {
   if (!Array.isArray(window.portfolioData)) return [];
@@ -141,6 +283,8 @@ function getFilteredWorks() {
   const validWorks = getValidWorks();
 
   if (activeFilter === "all") {
+    if (!SHUFFLE_ALL) return validWorks;
+
     if (!shuffledAllWorks.length) {
       shuffledAllWorks = shuffleArray(validWorks);
     }
@@ -150,59 +294,143 @@ function getFilteredWorks() {
   return validWorks.filter((w) => w.category === activeFilter);
 }
 
-function renderPortfolio() {
+/* --- 상태를 URL에 저장 / 복원 --- */
+function readStateFromURL() {
+  const params = new URLSearchParams(window.location.search);
+
+  const cat = params.get("cat");
+  const usableTab = qsa(".tab").find((t) => t.dataset.filter === cat && !t.hidden);
+  if (usableTab) activeFilter = cat;
+
+  const n = parseInt(params.get("n"), 10);
+  if (n > 0) {
+    visibleCount = Math.min(Math.max(PAGE_SIZE, Math.ceil(n / PAGE_SIZE) * PAGE_SIZE), 200);
+  }
+}
+
+function writeStateToURL() {
+  const params = new URLSearchParams(window.location.search);
+
+  if (activeFilter === "all") params.delete("cat");
+  else params.set("cat", activeFilter);
+
+  if (visibleCount === PAGE_SIZE) params.delete("n");
+  else params.set("n", String(visibleCount));
+
+  const query = params.toString();
+  const search = query ? "?" + query : "";
+
+  history.replaceState(null, "", window.location.pathname + search + window.location.hash);
+
+  // 상세 페이지의 '뒤로가기'가 목록 상태를 복원할 수 있도록 저장
+  try {
+    sessionStorage.setItem("portfolioListSearch", search);
+  } catch (err) {
+    /* 저장소를 못 쓰는 환경이면 무시 */
+  }
+}
+
+function setActiveTab(filter) {
+  qsa(".tab").forEach((tab) => {
+    const on = tab.dataset.filter === filter;
+    tab.classList.toggle("isActive", on);
+    tab.setAttribute("aria-pressed", String(on));
+  });
+}
+
+function renderPortfolio(focusIndex = -1) {
   const grid = qs("#workGrid");
   const loadMoreBtn = qs("#loadMoreBtn");
+  const status = qs("#portfolioStatus");
   if (!grid) return;
 
   const filtered = getFilteredWorks();
   const visibleWorks = filtered.slice(0, visibleCount);
 
-  grid.innerHTML = visibleWorks.map((w) => `
-    <a class="workCard" href="work.html?id=${encodeURIComponent(w.id)}" data-work-id="${w.id}">
+  if (!filtered.length) {
+    grid.innerHTML = `<p class="emptyState">아직 등록된 작업이 없습니다.</p>`;
+    if (loadMoreBtn) loadMoreBtn.hidden = true;
+    if (status) status.textContent = "표시할 작업이 없습니다.";
+    return;
+  }
+
+  grid.innerHTML = visibleWorks.map((w) => {
+    const detail = detailMap.get(w.id) || {};
+    const tool = detail.tools || w.tool || "-";
+    const contribution = detail.contribution || w.contribution || "-";
+    const label = CATEGORY_LABEL[w.category] || "";
+
+    return `
+    <a class="workCard" href="work.html?id=${encodeURIComponent(w.id)}">
       <div class="workThumb">
-        <img src="${w.thumb}" alt="${w.title} 썸네일" loading="lazy" />
+        <img src="${esc(w.thumb)}" alt="${esc(w.title)} 썸네일" loading="lazy" decoding="async" />
       </div>
-      <h3 class="workTitle">${w.title}</h3>
-      <p class="workDesc">${w.desc}</p>
+      ${label ? `<span class="workBadge">${esc(label)}</span>` : ""}
+      <h3 class="workTitle">${esc(w.title)}</h3>
+      <p class="workDesc">${esc(w.desc)}</p>
       <div class="workMeta">
-        <span>Tool : ${w.tool}</span>
-        <span>Contribution : ${w.contribution}</span>
+        <span>Tool : ${esc(tool)}</span>
+        <span>Contribution : ${esc(contribution)}</span>
       </div>
-    </a>
-  `).join("");
+    </a>`;
+  }).join("");
 
   if (loadMoreBtn) {
     loadMoreBtn.hidden = visibleCount >= filtered.length;
+    const label = qs("span", loadMoreBtn);
+    if (label) label.textContent = `더 보기 (${visibleWorks.length}/${filtered.length})`;
+  }
+
+  if (status) {
+    status.textContent = `총 ${filtered.length}개 중 ${visibleWorks.length}개 표시 중`;
+  }
+
+  // '더 보기' 뒤에는 새로 나타난 첫 카드로 포커스 이동
+  if (focusIndex >= 0 && grid.children[focusIndex]) {
+    grid.children[focusIndex].focus({ preventScroll: false });
   }
 }
 
 function initPortfolio() {
-  qsa(".tab").forEach((btn) => {
+  const tabs = qsa(".tab");
+
+  // 작업이 하나도 없는 카테고리 탭은 자동으로 숨김
+  const validWorks = getValidWorks();
+  tabs.forEach((btn) => {
+    const filter = btn.dataset.filter;
+    if (filter !== "all" && !validWorks.some((w) => w.category === filter)) {
+      btn.hidden = true;
+    }
+  });
+
+  readStateFromURL();
+  setActiveTab(activeFilter);
+
+  tabs.forEach((btn) => {
     btn.addEventListener("click", () => {
-      qsa(".tab").forEach((tab) => {
-        tab.classList.remove("isActive");
-        tab.setAttribute("aria-selected", "false");
-      });
-
-      btn.classList.add("isActive");
-      btn.setAttribute("aria-selected", "true");
-
       activeFilter = btn.dataset.filter;
-      visibleCount = 4;
+      visibleCount = PAGE_SIZE;
 
-      if (activeFilter === "all") {
+      setActiveTab(activeFilter);
+
+      if (activeFilter === "all" && SHUFFLE_ALL) {
         resetAllShuffle();
       }
 
+      writeStateToURL();
       renderPortfolio();
     });
   });
 
   qs("#loadMoreBtn")?.addEventListener("click", () => {
-    visibleCount += 4;
-    renderPortfolio();
+    const prevCount = visibleCount;
+    visibleCount += PAGE_SIZE;
+    writeStateToURL();
+    renderPortfolio(prevCount);
   });
+
+  if (SHUFFLE_ALL) resetAllShuffle();
+  renderPortfolio();
 }
 
 /** ---------- Top Button ---------- */
@@ -224,13 +452,12 @@ function initTopButton() {
 
 /** ---------- Init ---------- */
 document.addEventListener("DOMContentLoaded", () => {
+  buildDetailMap();
+
   initMobileNav();
+  initActiveNav();
   renderCareers();
   initCareerModal();
-
-  resetAllShuffle();
-  renderPortfolio();
   initPortfolio();
-
   initTopButton();
 });
