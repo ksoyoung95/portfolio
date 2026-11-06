@@ -8,7 +8,7 @@
 
 /** ---------- Config ---------- */
 const SHUFFLE_ALL = false; // true: '전체' 탭 랜덤 노출 / false: data.js 순서 고정
-const PAGE_SIZE = 4;
+const PAGE_SIZE = 6;
 const CATEGORY_LABEL = {
   detail: "상세페이지",
   uiux: "홈페이지",
@@ -275,6 +275,27 @@ function getValidWorks() {
   });
 }
 
+/** 대표 프로젝트: 시안 상단에 고정 배치, 기존 상세페이지 데이터 연결 */
+function renderFeatured() {
+  const grid = qs("#featuredGrid");
+  if (!grid) return;
+
+  const featuredIds = ["hyundai-hyunday", "beauty-freeweek", "hyundai-aibeauty"];
+  const works = getValidWorks();
+  grid.innerHTML = featuredIds.map((id) => {
+    const work = works.find((w) => w.id === id);
+    if (!work) return "";
+    const detail = detailMap.get(id) || {};
+    return `
+      <a class="featuredCard" href="work.html?id=${encodeURIComponent(id)}">
+        <div class="featuredThumb"><img src="${esc(work.thumb)}" alt="${esc(work.title)} 대표 이미지" /></div>
+        <h3 class="featuredTitle">${esc(work.title.replace(/^\[[^\]]+\]\s*/, ""))}</h3>
+        <p class="featuredDesc">${esc(work.desc)}</p>
+        <span class="featuredMeta">${esc(CATEGORY_LABEL[work.category] || work.category)} · ${esc(detail.client || "프로젝트")}</span>
+      </a>`;
+  }).join("");
+}
+
 function resetAllShuffle() {
   shuffledAllWorks = shuffleArray(getValidWorks());
 }
@@ -356,8 +377,6 @@ function renderPortfolio(focusIndex = -1) {
 
   grid.innerHTML = visibleWorks.map((w) => {
     const detail = detailMap.get(w.id) || {};
-    const tool = detail.tools || w.tool || "-";
-    const contribution = detail.contribution || w.contribution || "-";
     const label = CATEGORY_LABEL[w.category] || "";
 
     return `
@@ -365,13 +384,9 @@ function renderPortfolio(focusIndex = -1) {
       <div class="workThumb">
         <img src="${esc(w.thumb)}" alt="${esc(w.title)} 썸네일" loading="lazy" decoding="async" />
       </div>
-      ${label ? `<span class="workBadge">${esc(label)}</span>` : ""}
       <h3 class="workTitle">${esc(w.title)}</h3>
       <p class="workDesc">${esc(w.desc)}</p>
-      <div class="workMeta">
-        <span>Tool : ${esc(tool)}</span>
-        <span>Contribution : ${esc(contribution)}</span>
-      </div>
+      <div class="workMeta">${esc(label || "프로젝트")} · ${esc(detail.client || w.type || "디자인")}</div>
     </a>`;
   }).join("");
 
@@ -453,6 +468,7 @@ function initTopButton() {
 /** ---------- Init ---------- */
 document.addEventListener("DOMContentLoaded", () => {
   buildDetailMap();
+  renderFeatured();
 
   initMobileNav();
   initActiveNav();
