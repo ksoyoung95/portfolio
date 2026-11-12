@@ -127,6 +127,16 @@ const careerData = [
 
 const portfolioData = [
   {
+    id: "yk-dubai-ppt",
+    category: "other",
+    title: "법무법인 YK 두바이 발표자료",
+    desc: "한국 의사의 두바이 진출 및 의사면허 취득 관련 해외사업 세미나 발표자료",
+    thumb: "./images/portfilo/thumb/thumb_yk_dubai.jpg",
+    tool: "Photoshop / PowerPoint",
+    contribution: "100%",
+    type: "Presentation"
+  },
+  {
     id: "yk-unfair-dismissal-ppt",
     category: "other",
     title: "법무법인 YK 부당해고 쟁점사례",
