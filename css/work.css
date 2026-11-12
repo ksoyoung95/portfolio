@@ -235,6 +235,17 @@ a{
   width: 100%;
 }
 
+/* Mobility forum poster: separate horizontal and vertical layouts */
+.workFullImageWrap.hasPosterSpacing > * + *{
+  margin-top: 48px;
+}
+
+@media (max-width: 768px){
+  .workFullImageWrap.hasPosterSpacing > * + *{
+    margin-top: 28px;
+  }
+}
+
 .workFullImage{
   display: block;
   width: 100%;
