@@ -127,6 +127,16 @@ const careerData = [
 
 const portfolioData = [
   {
+    id: "yk-law-fair-booth",
+    category: "other",
+    title: "법무법인 YK 법률 박람회 부스 제작",
+    desc: "법무법인 YK 법률 박람회 부스 그래픽 디자인 및 목업",
+    thumb: "./images/portfilo/thumb/thumb_yk_law_fair_booth.jpg",
+    tool: "Photoshop / Illustrator",
+    contribution: "100%",
+    type: "Exhibition Design"
+  },
+  {
     id: "yk-dubai-ppt",
     category: "other",
     title: "법무법인 YK 두바이 발표자료",
