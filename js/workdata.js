@@ -190,8 +190,8 @@ const workDetailData = [
     client: "[법무법인 YK]",
     title: "법무법인 YK B2B 비즈니스 브로슈어",
     role: "Editorial Design",
-    tools: "",
-    contribution: "",
+    tools: "InDesign / Illustrator",
+    contribution: "100%",
     hideColor: true,
     hideDetailTitle: true,
     detailMedia: [
