@@ -188,7 +188,7 @@ const workDetailData = [
     id: "yk-proposal-ppt",
     category: "Presentation / Other",
     client: "[법무법인 YK]",
-    title: "수임제안 프레젠테이션 전략 및 실무 노하우",
+    title: "법무법인 YK 수임제안 전략및 실무 노하우",
     role: "Presentation Design",
     contribution: "100%",
     tools: "Photoshop / PowerPoint",
