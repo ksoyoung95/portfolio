@@ -185,6 +185,22 @@
 
 const workDetailData = [
   {
+    id: "yk-safety-brochure",
+    category: "Editorial Design",
+    client: "[법무법인 YK]",
+    title: "법무법인 YK 중대재해센터 브로슈어",
+    role: "Editorial Design",
+    contribution: "100%",
+    tools: "InDesign / Illustrator",
+    hideColor: true,
+    hideDetailTitle: true,
+    detailMedia: [
+      { type: "image", src: "./images/portfilo/editorial/yk_safety/cover.jpg", alt: "법무법인 YK 중대재해센터 브로슈어 표지", layout: "contained" },
+      { type: "image", src: "./images/portfilo/editorial/yk_safety/spread_01.jpg", alt: "법무법인 YK 중대재해센터 브로슈어 내지 1", layout: "contained" },
+      { type: "image", src: "./images/portfilo/editorial/yk_safety/spread_02.jpg", alt: "법무법인 YK 중대재해센터 브로슈어 내지 2", layout: "contained" }
+    ]
+  },
+  {
     id: "yk-b2b-brochure",
     category: "Editorial Design",
     client: "[법무법인 YK]",
