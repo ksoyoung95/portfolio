@@ -330,6 +330,7 @@ function renderDetailMedia(work) {
   if (!detailWrap) return;
 
   detailWrap.innerHTML = "";
+  detailWrap.classList.toggle("hasPosterSpacing", work.id === "yk-mobility-forum-poster");
 
   (work.detailMedia || []).forEach((media) => {
     const node = createMediaNode(media);
