@@ -185,6 +185,21 @@
 
 const workDetailData = [
   {
+    id: "yk-law-fair-booth",
+    category: "Exhibition Design / Other",
+    client: "[법무법인 YK]",
+    title: "법무법인 YK 법률 박람회 부스 제작",
+    role: "Exhibition Graphic Design",
+    contribution: "100%",
+    tools: "Photoshop / Illustrator",
+    hideColor: true,
+    hideDetailTitle: true,
+    detailMedia: [
+      { type: "image", src: "./images/portfilo/other/yk_law_fair_booth/graphic.jpg", alt: "법무법인 YK 법률 박람회 부스 그래픽 시안", layout: "contained" },
+      { type: "image", src: "./images/portfilo/other/yk_law_fair_booth/booth_mockup.jpg", alt: "법무법인 YK 법률 박람회 부스 목업", layout: "contained" }
+    ]
+  },
+  {
     id: "yk-dubai-ppt",
     category: "Presentation / Other",
     client: "[법무법인 YK]",
