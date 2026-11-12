@@ -127,6 +127,16 @@ const careerData = [
 
 const portfolioData = [
   {
+    id: "yk-mobility-forum-poster",
+    category: "ads",
+    title: "미래모빌리티 정책연구포럼 세미나 포스터",
+    desc: "2026 미래모빌리티 정책연구포럼 세미나 포스터 가로·세로형 디자인",
+    thumb: "./images/portfilo/thumb/thumb_yk_mobility_forum.jpg",
+    tool: "Photoshop",
+    contribution: "100%",
+    type: "Poster Design"
+  },
+  {
     id: "yk-law-fair-booth",
     category: "other",
     title: "법무법인 YK 법률 박람회 부스 제작",
