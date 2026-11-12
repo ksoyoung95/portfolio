@@ -185,6 +185,24 @@
 
 const workDetailData = [
   {
+    id: "yk-b2b-brochure",
+    category: "Editorial Design",
+    client: "[법무법인 YK]",
+    title: "법무법인 YK B2B 비즈니스 브로슈어",
+    role: "Editorial Design",
+    tools: "",
+    contribution: "",
+    hideColor: true,
+    hideDetailTitle: true,
+    detailMedia: [
+      { type: "image", src: "./images/portfilo/editorial/yk_b2b/cover.jpg", alt: "법무법인 YK B2B 브로슈어 표지", layout: "contained" },
+      { type: "image", src: "./images/portfilo/editorial/yk_b2b/spread_01.jpg", alt: "법무법인 YK B2B 브로슈어 내지 1", layout: "contained" },
+      { type: "image", src: "./images/portfilo/editorial/yk_b2b/spread_02.jpg", alt: "법무법인 YK B2B 브로슈어 내지 2", layout: "contained" },
+      { type: "image", src: "./images/portfilo/editorial/yk_b2b/spread_03.jpg", alt: "법무법인 YK B2B 브로슈어 내지 3", layout: "contained" },
+      { type: "image", src: "./images/portfilo/editorial/yk_b2b/spread_04.jpg", alt: "법무법인 YK B2B 브로슈어 내지 4", layout: "contained" }
+    ]
+  },
+  {
     id: "hyundai-jejuair",
     category: "E-commerce / Promotion",
     client: "[현대디에프]",
