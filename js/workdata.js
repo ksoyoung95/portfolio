@@ -185,6 +185,33 @@
 
 const workDetailData = [
   {
+    id: "yk-proposal-ppt",
+    category: "Presentation / Other",
+    client: "[법무법인 YK]",
+    title: "수임제안 프레젠테이션 전략 및 실무 노하우",
+    role: "Presentation Design",
+    contribution: "100%",
+    tools: "Photoshop / PowerPoint",
+    hideColor: true,
+    hideDetailTitle: true,
+    detailMedia: [
+      { type: "image", src: "./images/portfilo/PPT/slide_01.jpg", alt: "수임제안 프레젠테이션 슬라이드 1", layout: "contained" },
+      { type: "image", src: "./images/portfilo/PPT/slide_02.jpg", alt: "수임제안 프레젠테이션 슬라이드 2", layout: "contained" },
+      { type: "image", src: "./images/portfilo/PPT/slide_03.jpg", alt: "수임제안 프레젠테이션 슬라이드 3", layout: "contained" },
+      { type: "image", src: "./images/portfilo/PPT/slide_04.jpg", alt: "수임제안 프레젠테이션 슬라이드 4", layout: "contained" },
+      { type: "image", src: "./images/portfilo/PPT/slide_05.jpg", alt: "수임제안 프레젠테이션 슬라이드 5", layout: "contained" },
+      { type: "image", src: "./images/portfilo/PPT/slide_06.jpg", alt: "수임제안 프레젠테이션 슬라이드 6", layout: "contained" },
+      { type: "image", src: "./images/portfilo/PPT/slide_07.jpg", alt: "수임제안 프레젠테이션 슬라이드 7", layout: "contained" },
+      { type: "image", src: "./images/portfilo/PPT/slide_08.jpg", alt: "수임제안 프레젠테이션 슬라이드 8", layout: "contained" },
+      { type: "image", src: "./images/portfilo/PPT/slide_09.jpg", alt: "수임제안 프레젠테이션 슬라이드 9", layout: "contained" },
+      { type: "image", src: "./images/portfilo/PPT/slide_10.jpg", alt: "수임제안 프레젠테이션 슬라이드 10", layout: "contained" },
+      { type: "image", src: "./images/portfilo/PPT/slide_11.jpg", alt: "수임제안 프레젠테이션 슬라이드 11", layout: "contained" },
+      { type: "image", src: "./images/portfilo/PPT/slide_12.jpg", alt: "수임제안 프레젠테이션 슬라이드 12", layout: "contained" },
+      { type: "image", src: "./images/portfilo/PPT/slide_13.jpg", alt: "수임제안 프레젠테이션 슬라이드 13", layout: "contained" },
+      { type: "image", src: "./images/portfilo/PPT/slide_14.jpg", alt: "수임제안 프레젠테이션 슬라이드 14", layout: "contained" }
+    ]
+  },
+  {
     id: "yk-ip-brochure",
     category: "Editorial Design",
     client: "[법무법인 YK]",
