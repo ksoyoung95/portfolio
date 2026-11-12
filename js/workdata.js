@@ -185,6 +185,21 @@
 
 const workDetailData = [
   {
+    id: "yk-mobility-forum-poster",
+    category: "Poster Design / Ads",
+    client: "[법무법인 YK]",
+    title: "미래모빌리티 정책연구포럼 세미나 포스터",
+    role: "Poster Design",
+    contribution: "100%",
+    tools: "Photoshop",
+    hideColor: true,
+    hideDetailTitle: true,
+    detailMedia: [
+      { type: "image", src: "./images/portfilo/ads/yk_mobility_forum/poster_horizontal.jpg", alt: "미래모빌리티 정책연구포럼 세미나 포스터 가로형", layout: "contained" },
+      { type: "image", src: "./images/portfilo/ads/yk_mobility_forum/poster_vertical.jpg", alt: "미래모빌리티 정책연구포럼 세미나 포스터 세로형", layout: "contained" }
+    ]
+  },
+  {
     id: "yk-law-fair-booth",
     category: "Exhibition Design / Other",
     client: "[법무법인 YK]",
