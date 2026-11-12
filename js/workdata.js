@@ -185,6 +185,32 @@
 
 const workDetailData = [
   {
+    id: "yk-unfair-dismissal-ppt",
+    category: "Presentation / Other",
+    client: "[법무법인 YK]",
+    title: "법무법인 YK 부당해고 쟁점사례",
+    role: "Presentation Design",
+    contribution: "100%",
+    tools: "Photoshop / PowerPoint",
+    hideColor: true,
+    hideDetailTitle: true,
+    detailMedia: [
+      { type: "image", src: "./images/portfilo/PPT/yk_unfair_dismissal/slide_01.jpg", alt: "부당해고 쟁점사례 슬라이드 1", layout: "contained" },
+      { type: "image", src: "./images/portfilo/PPT/yk_unfair_dismissal/slide_02.jpg", alt: "부당해고 쟁점사례 슬라이드 2", layout: "contained" },
+      { type: "image", src: "./images/portfilo/PPT/yk_unfair_dismissal/slide_04.jpg", alt: "부당해고 쟁점사례 슬라이드 4", layout: "contained" },
+      { type: "image", src: "./images/portfilo/PPT/yk_unfair_dismissal/slide_05.jpg", alt: "부당해고 쟁점사례 슬라이드 5", layout: "contained" },
+      { type: "image", src: "./images/portfilo/PPT/yk_unfair_dismissal/slide_06.jpg", alt: "부당해고 쟁점사례 슬라이드 6", layout: "contained" },
+      { type: "image", src: "./images/portfilo/PPT/yk_unfair_dismissal/slide_07.jpg", alt: "부당해고 쟁점사례 슬라이드 7", layout: "contained" },
+      { type: "image", src: "./images/portfilo/PPT/yk_unfair_dismissal/slide_08.jpg", alt: "부당해고 쟁점사례 슬라이드 8", layout: "contained" },
+      { type: "image", src: "./images/portfilo/PPT/yk_unfair_dismissal/slide_09.jpg", alt: "부당해고 쟁점사례 슬라이드 9", layout: "contained" },
+      { type: "image", src: "./images/portfilo/PPT/yk_unfair_dismissal/slide_10.jpg", alt: "부당해고 쟁점사례 슬라이드 10", layout: "contained" },
+      { type: "image", src: "./images/portfilo/PPT/yk_unfair_dismissal/slide_11.jpg", alt: "부당해고 쟁점사례 슬라이드 11", layout: "contained" },
+      { type: "image", src: "./images/portfilo/PPT/yk_unfair_dismissal/slide_12.jpg", alt: "부당해고 쟁점사례 슬라이드 12", layout: "contained" },
+      { type: "image", src: "./images/portfilo/PPT/yk_unfair_dismissal/slide_13.jpg", alt: "부당해고 쟁점사례 슬라이드 13", layout: "contained" },
+      { type: "image", src: "./images/portfilo/PPT/yk_unfair_dismissal/slide_28.jpg", alt: "부당해고 쟁점사례 슬라이드 28", layout: "contained" }
+    ]
+  },
+  {
     id: "yk-proposal-ppt",
     category: "Presentation / Other",
     client: "[법무법인 YK]",
