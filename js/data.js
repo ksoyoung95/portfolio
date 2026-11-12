@@ -127,6 +127,16 @@ const careerData = [
 
 const portfolioData = [
   {
+    id: "yk-ip-brochure",
+    category: "editorial",
+    title: "법무법인 YK 지식재산그룹 브로슈어",
+    desc: "지식재산그룹의 서비스 및 전문 업무를 소개하는 브로슈어 편집디자인",
+    thumb: "./images/portfilo/thumb/thumb_yk_ip.jpg",
+    tool: "InDesign / Illustrator",
+    contribution: "100%",
+    type: "Editorial Design"
+  },
+  {
     id: "yk-safety-brochure",
     category: "editorial",
     title: "법무법인 YK 중대재해센터 브로슈어",
