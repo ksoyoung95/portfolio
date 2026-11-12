@@ -127,6 +127,16 @@ const careerData = [
 
 const portfolioData = [
   {
+    id: "yk-safety-brochure",
+    category: "editorial",
+    title: "법무법인 YK 중대재해센터 브로슈어",
+    desc: "중대재해센터의 주요 업무와 사례를 소개하는 브로슈어 편집디자인",
+    thumb: "./images/portfilo/thumb/thumb_yk_safety.jpg",
+    tool: "InDesign / Illustrator",
+    contribution: "100%",
+    type: "Editorial Design"
+  },
+  {
     id: "yk-b2b-brochure",
     category: "editorial",
     title: "법무법인 YK B2B 비즈니스 브로슈어",
