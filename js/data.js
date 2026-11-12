@@ -127,6 +127,14 @@ const careerData = [
 
 const portfolioData = [
   {
+    id: "yk-b2b-brochure",
+    category: "editorial",
+    title: "법무법인 YK B2B 비즈니스 브로슈어",
+    desc: "기업 법률 서비스 및 주요 업무를 소개하는 브로슈어 편집디자인",
+    thumb: "./images/portfilo/thumb/thumb_yk_b2b.jpg",
+    type: "Editorial Design"
+  },
+  {
     id: "hyundai-jejuair",
     category: "detail",
     title: "[현대디에프] 제주항공 프로모션 이벤트",
