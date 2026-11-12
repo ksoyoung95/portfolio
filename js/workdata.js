@@ -185,6 +185,31 @@
 
 const workDetailData = [
   {
+    id: "yk-da-ads",
+    category: "Display Advertising / Ads",
+    client: "[법무법인 YK]",
+    title: "법무법인 YK DA 광고 이미지",
+    role: "Display Advertising Design",
+    contribution: "100%",
+    tools: "Photoshop",
+    hideColor: true,
+    hideDetailTitle: true,
+    detailMedia: [
+      { type: "image", src: "./images/portfilo/ads/yk_da/da_01.jpg", alt: "법무법인 YK DA 광고 소재 1", layout: "contained" },
+      { type: "image", src: "./images/portfilo/ads/yk_da/da_02.jpg", alt: "법무법인 YK DA 광고 소재 2", layout: "contained" },
+      { type: "image", src: "./images/portfilo/ads/yk_da/da_03.jpg", alt: "법무법인 YK DA 광고 소재 3", layout: "contained" },
+      { type: "image", src: "./images/portfilo/ads/yk_da/da_04.jpg", alt: "법무법인 YK DA 광고 소재 4", layout: "contained" },
+      { type: "image", src: "./images/portfilo/ads/yk_da/da_05.jpg", alt: "법무법인 YK DA 광고 소재 5", layout: "contained" },
+      { type: "image", src: "./images/portfilo/ads/yk_da/da_06.jpg", alt: "법무법인 YK DA 광고 소재 6", layout: "contained" },
+      { type: "image", src: "./images/portfilo/ads/yk_da/da_07.jpg", alt: "법무법인 YK DA 광고 소재 7", layout: "contained" },
+      { type: "image", src: "./images/portfilo/ads/yk_da/da_08.jpg", alt: "법무법인 YK DA 광고 소재 8", layout: "contained" },
+      { type: "image", src: "./images/portfilo/ads/yk_da/da_09.jpg", alt: "법무법인 YK DA 광고 소재 9", layout: "contained" },
+      { type: "image", src: "./images/portfilo/ads/yk_da/da_10.jpg", alt: "법무법인 YK DA 광고 소재 10", layout: "contained" },
+      { type: "image", src: "./images/portfilo/ads/yk_da/da_11.jpg", alt: "법무법인 YK DA 광고 소재 11", layout: "contained" },
+      { type: "image", src: "./images/portfilo/ads/yk_da/da_12.jpg", alt: "법무법인 YK DA 광고 소재 12", layout: "contained" }
+    ]
+  },
+  {
     id: "yk-mobility-forum-poster",
     category: "Poster Design / Ads",
     client: "[법무법인 YK]",
