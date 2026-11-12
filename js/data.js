@@ -127,6 +127,16 @@ const careerData = [
 
 const portfolioData = [
   {
+    id: "yk-unfair-dismissal-ppt",
+    category: "other",
+    title: "법무법인 YK 부당해고 쟁점사례",
+    desc: "한국고용노동교육원 부당해고 쟁점사례 교육 발표자료",
+    thumb: "./images/portfilo/thumb/thumb_yk_unfair_dismissal.jpg",
+    tool: "Photoshop / PowerPoint",
+    contribution: "100%",
+    type: "Presentation"
+  },
+  {
     id: "yk-proposal-ppt",
     category: "other",
     title: "법무법인 YK 수임제안 전략및 실무 노하우",
