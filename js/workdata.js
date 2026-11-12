@@ -185,6 +185,25 @@
 
 const workDetailData = [
   {
+    id: "yk-ip-brochure",
+    category: "Editorial Design",
+    client: "[법무법인 YK]",
+    title: "법무법인 YK 지식재산그룹 브로슈어",
+    role: "Editorial Design",
+    contribution: "100%",
+    tools: "InDesign / Illustrator",
+    hideColor: true,
+    hideDetailTitle: true,
+    detailMedia: [
+      { type: "image", src: "./images/portfilo/editorial/yk_ip/cover.jpg", alt: "법무법인 YK 지식재산그룹 브로슈어 표지", layout: "contained" },
+      { type: "image", src: "./images/portfilo/editorial/yk_ip/spread_01.jpg", alt: "법무법인 YK 지식재산그룹 브로슈어 내지 1", layout: "contained" },
+      { type: "image", src: "./images/portfilo/editorial/yk_ip/spread_02.jpg", alt: "법무법인 YK 지식재산그룹 브로슈어 내지 2", layout: "contained" },
+      { type: "image", src: "./images/portfilo/editorial/yk_ip/spread_03.jpg", alt: "법무법인 YK 지식재산그룹 브로슈어 내지 3", layout: "contained" },
+      { type: "image", src: "./images/portfilo/editorial/yk_ip/spread_04.jpg", alt: "법무법인 YK 지식재산그룹 브로슈어 내지 4", layout: "contained" },
+      { type: "image", src: "./images/portfilo/editorial/yk_ip/spread_05.jpg", alt: "법무법인 YK 지식재산그룹 브로슈어 내지 5", layout: "contained" }
+    ]
+  },
+  {
     id: "yk-safety-brochure",
     category: "Editorial Design",
     client: "[법무법인 YK]",
