@@ -10,10 +10,11 @@
 const SHUFFLE_ALL = false; // true: '전체' 탭 랜덤 노출 / false: data.js 순서 고정
 const PAGE_SIZE = 6;
 const CATEGORY_LABEL = {
-  detail: "상세페이지",
+  detail: "홈페이지",
   uiux: "홈페이지",
   ads: "광고",
-  video: "영상"
+  video: "영상",
+  editorial: "편집디자인"
 };
 
 /** ---------- Helpers ---------- */
@@ -312,6 +313,8 @@ function getFilteredWorks() {
     return shuffledAllWorks;
   }
 
+  // 기존 상세페이지·UI 작업은 새 홈페이지 카테고리에 함께 표시
+  if (activeFilter === "uiux") return validWorks.filter((w) => ["uiux", "detail"].includes(w.category));
   return validWorks.filter((w) => w.category === activeFilter);
 }
 
@@ -409,14 +412,8 @@ function renderPortfolio(focusIndex = -1) {
 function initPortfolio() {
   const tabs = qsa(".tab");
 
-  // 작업이 하나도 없는 카테고리 탭은 자동으로 숨김
-  const validWorks = getValidWorks();
-  tabs.forEach((btn) => {
-    const filter = btn.dataset.filter;
-    if (filter !== "all" && !validWorks.some((w) => w.category === filter)) {
-      btn.hidden = true;
-    }
-  });
+  // 빈 카테고리도 노출하고, 선택 시 빈 목록 안내 표시
+  tabs.forEach((btn) => { btn.hidden = false; });
 
   readStateFromURL();
   setActiveTab(activeFilter);
