@@ -7,7 +7,7 @@
 ========================== */
 
 /** ---------- Config ---------- */
-const SHUFFLE_ALL = false; // true: '전체' 탭 랜덤 노출 / false: data.js 순서 고정
+const SHUFFLE_ALL = true; // true: '전체' 탭 랜덤 노출 / false: data.js 순서 고정
 const PAGE_SIZE = 6;
 const CATEGORY_LABEL = {
   detail: "홈페이지",
@@ -424,10 +424,6 @@ function initPortfolio() {
       visibleCount = PAGE_SIZE;
 
       setActiveTab(activeFilter);
-
-      if (activeFilter === "all" && SHUFFLE_ALL) {
-        resetAllShuffle();
-      }
 
       writeStateToURL();
       renderPortfolio();
