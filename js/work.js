@@ -331,6 +331,7 @@ function renderDetailMedia(work) {
 
   detailWrap.innerHTML = "";
   detailWrap.classList.toggle("hasPosterSpacing", work.id === "yk-mobility-forum-poster");
+  detailWrap.classList.toggle("hasDaGrid", work.id === "yk-da-ads");
 
   (work.detailMedia || []).forEach((media) => {
     const node = createMediaNode(media);
