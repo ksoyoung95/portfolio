@@ -127,6 +127,16 @@ const careerData = [
 
 const portfolioData = [
   {
+    id: "yk-da-ads",
+    category: "ads",
+    title: "법무법인 YK DA 광고 이미지",
+    desc: "법무법인 YK 디스플레이 광고 소재 디자인",
+    thumb: "./images/portfilo/thumb/thumb_yk_da.jpg",
+    tool: "Photoshop",
+    contribution: "100%",
+    type: "Display Advertising"
+  },
+  {
     id: "yk-mobility-forum-poster",
     category: "ads",
     title: "미래모빌리티 정책연구포럼 세미나 포스터",
