@@ -129,7 +129,7 @@ const portfolioData = [
   {
     id: "yk-proposal-ppt",
     category: "other",
-    title: "수임제안 프레젠테이션 전략 및 실무 노하우",
+    title: "법무법인 YK 수임제안 전략및 실무 노하우",
     desc: "법무법인 YK 수임제안 실무 교육 및 전략 프레젠테이션 자료",
     thumb: "./images/portfilo/thumb/thumb_yk_ppt.jpg",
     tool: "Photoshop / PowerPoint",
