@@ -14,7 +14,8 @@ const CATEGORY_LABEL = {
   uiux: "홈페이지",
   ads: "광고",
   video: "영상",
-  editorial: "편집디자인"
+  editorial: "편집디자인",
+  other: "기타"
 };
 
 /** ---------- Helpers ---------- */
