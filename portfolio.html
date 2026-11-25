@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <title>Portfolio | 강소영 디자인 작업물</title>
+  <meta name="description" content="강소영 웹, 광고, 영상, 편집디자인 및 기타 작업물" />
+  <meta name="theme-color" content="#ffffff" />
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="stylesheet" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css" />
+  <link rel="stylesheet" href="./css/style.css?v=three-pages-20261125" />
+</head>
+<body class="pagePortfolio">
+  <a class="skipLink" href="#mainContent">본문으로 바로가기</a>
+  <header class="siteHeader">
+    <div class="container headerRow">
+      <a class="brand" href="./index.html" aria-label="soYoung 홈으로">soYoung</a>
+      <nav class="nav" aria-label="주 메뉴">
+        <a class="navLink" href="./index.html">Home</a>
+        <a class="navLink" href="./about.html">About</a>
+        <a class="navLink" href="./portfolio.html">Portfolio</a>
+      </nav>
+      <button class="navToggle" type="button" aria-label="메뉴 열기" aria-expanded="false" aria-controls="mobileNav"><span class="burger" aria-hidden="true"></span></button>
+    </div>
+    <nav class="mobileNav" id="mobileNav" aria-label="모바일 메뉴" hidden>
+      <a class="mobileNavLink" href="./index.html">Home</a>
+      <a class="mobileNavLink" href="./about.html">About</a>
+      <a class="mobileNavLink" href="./portfolio.html">Portfolio</a>
+    </nav>
+  </header>
+
+  <main id="mainContent">
+    <section class="pageIntro container"><p class="homeEyebrow">SELECTED & ALL PROJECTS</p><h1>Portfolio<span class="pageIntroPeriod">.</span></h1><p>웹, 콘텐츠, 광고, 편집디자인 등 다양한 프로젝트를 모았습니다.</p></section>
+    <section class="featured" aria-label="대표 프로젝트"><div class="container"><div class="featuredGrid" id="featuredGrid"></div></div></section>
+
+    <section id="portfolio" class="portfolioSection" aria-label="전체 포트폴리오">
+      <div class="container portfolioWrap">
+        <h2 class="srOnly">Portfolio</h2>
+        <div class="tabs" role="group" aria-label="포트폴리오 카테고리">
+          <button class="tab isActive" type="button" data-filter="all" aria-pressed="true">전체</button>
+          <button class="tab" type="button" data-filter="uiux" aria-pressed="false">홈페이지</button>
+          <button class="tab" type="button" data-filter="video" aria-pressed="false">영상</button>
+          <button class="tab" type="button" data-filter="ads" aria-pressed="false">광고</button>
+          <button class="tab" type="button" data-filter="editorial" aria-pressed="false">편집디자인</button>
+          <button class="tab" type="button" data-filter="other" aria-pressed="false">기타</button>
+        </div>
+        <p class="srOnly" id="portfolioStatus" role="status" aria-live="polite"></p>
+        <div class="workGrid" id="workGrid" aria-label="포트폴리오 리스트"></div>
+        <div class="moreBtnWrap"><button class="moreBtn" id="loadMoreBtn" type="button"><span>더 보기</span><img class="moreBtnIcon" src="./images/profile/ioc/Expand_down.png" alt="" aria-hidden="true" /></button></div>
+      </div>
+    </section>
+
+    <a class="floatingTop" href="#home" aria-label="맨 위로"><img src="./images/profile/ioc/Expand_up.png" alt="" aria-hidden="true" /></a>
+  </main>
+  <footer class="siteFooter"><div class="container"><small>© 2026 강소영. All rights reserved.</small></div></footer>
+  <script src="./js/data.js"></script>
+  <script src="./js/workdata.js"></script>
+  <script src="./js/script.js?v=three-pages-20261125"></script>
+</body>
+</html>
