@@ -31,8 +31,8 @@ body{
   background: var(--work-bg);
   color: var(--work-text);
   font-family:
-    "Pretendard Variable",
-    Pretendard,
+    "SUIT Variable",
+    SUIT,
     -apple-system,
     BlinkMacSystemFont,
     system-ui,
@@ -390,8 +390,8 @@ a{
   background: transparent;
   color: #2d170f;
   font-family:
-    "Pretendard Variable",
-    Pretendard,
+    "SUIT Variable",
+    SUIT,
     -apple-system,
     BlinkMacSystemFont,
     system-ui,
@@ -446,8 +446,8 @@ a{
   text-align: center;
   color: var(--beauty-muted);
   font-family:
-    "Pretendard Variable",
-    Pretendard,
+    "SUIT Variable",
+    SUIT,
     -apple-system,
     BlinkMacSystemFont,
     system-ui,
