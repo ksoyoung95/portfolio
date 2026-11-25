@@ -53,7 +53,7 @@ function getListUrl() {
   } catch (err) {
     /* 무시 */
   }
-  return `./index.html${search}#portfolio`;
+  return `./portfolio.html${search}#portfolio`;
 }
 
 /* =====================================================
@@ -76,7 +76,7 @@ function initBackButton() {
 
     // 내 사이트의 목록에서 왔을 때만 history.back (외부 링크/다른 작업에서 왔으면 목록으로 이동)
     const fromOwnList =
-      ref && ref.origin === window.location.origin && !/work\.html$/.test(ref.pathname);
+      ref && ref.origin === window.location.origin && /portfolio\.html$/.test(ref.pathname);
 
     if (fromOwnList && window.history.length > 1) {
       window.history.back();
