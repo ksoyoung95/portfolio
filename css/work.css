@@ -962,3 +962,6 @@ body{
   .workMetaValue{font-size:14px;overflow-wrap:anywhere}
 }
 @media(max-width:400px){.siteNav{gap:8px}.siteNav a{font-size:11px}.workMetaValue{font-size:12px}}
+
+/* Sitewide typeface: SUIT Variable */
+body,button,input,textarea,select{font-family:'SUIT Variable',SUIT,-apple-system,BlinkMacSystemFont,sans-serif}
