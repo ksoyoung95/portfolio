@@ -1,7 +1,7 @@
 :root{--blue:#4076ca;--ink:#111;--sub:#383838;--line:#e9e9e9;--pale:#e7eff6;--page:1060px}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth;scroll-padding-top:82px}
-body{margin:0;background:#fff;color:var(--ink);font-family:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,"Noto Sans KR",sans-serif;word-break:keep-all}
+body{margin:0;background:#fff;color:var(--ink);font-family:"SUIT Variable",SUIT,-apple-system,BlinkMacSystemFont,"Noto Sans KR",sans-serif;word-break:keep-all}
 a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}img{display:block;max-width:100%}
 [hidden]{display:none!important}
 .container{width:min(var(--page),calc(100% - 48px));margin-inline:auto}
@@ -104,4 +104,63 @@ body{background:#fff}
   .pagePortfolio .tabs{gap:6px;margin-bottom:28px}
   .pagePortfolio .tab{font-size:12px}
   .pageAbout .aboutSection{padding-bottom:75px}
+}
+
+/* 2026-11-25 / Minimal SUIT Home */
+.pageHome{
+  font-family:"SUIT Variable",SUIT,-apple-system,BlinkMacSystemFont,sans-serif;
+  color:#171717;
+  background:#fbfbfa;
+}
+.pageHome .siteHeader{background:#fbfbfa;border-bottom:0;backdrop-filter:none}
+.pageHome .headerRow{height:96px;border-bottom:1px solid #dcdedb}
+.pageHome .brand{font-size:22px;font-weight:800;letter-spacing:-.065em}
+.pageHome .nav{gap:38px}
+.pageHome .navLink{font-size:13px;color:#575c5c;font-weight:500;letter-spacing:-.005em}
+.pageHome .navLink:hover,.pageHome .navLink[aria-current="page"]{color:#171717}
+.pageHome .siteFooter{background:#fbfbfa;padding:0 0 28px}
+.pageHome .siteFooter>.container{border-top:1px solid #dcdedb;padding-top:21px}
+.pageHome .minimalHome{min-height:calc(100svh - 96px);display:flex;align-items:stretch}
+.pageHome .minimalHomeInner{display:flex;flex-direction:column;min-height:calc(100svh - 96px)}
+.minimalHomeTop{display:flex;justify-content:space-between;gap:18px;padding-top:37px}
+.minimalHomeIndex{font-size:11px;font-weight:650;letter-spacing:.085em;color:#858987;margin:0}
+.minimalHomeMain{display:grid;grid-template-columns:minmax(0,1fr) 170px;align-items:center;gap:60px;flex:1;padding:75px 0 95px}
+.minimalHomeCopy{max-width:850px}
+.minimalHomeOverline{font-size:15px;font-weight:500;color:#696e6b;margin:0 0 32px;letter-spacing:-.015em}
+.minimalHomeCopy h1{font-size:clamp(56px,6.4vw,92px);letter-spacing:-.082em;font-weight:730;line-height:1.22;margin:0}
+.minimalHomeCopy h1 em{font-style:normal;font-weight:350}
+.minimalHomeDot{color:#171717}
+.minimalHomeDesc{max-width:545px;font-size:15px;line-height:1.9;letter-spacing:-.015em;color:#686b6b;margin:40px 0 0}
+.minimalHomeLinks{display:flex;gap:40px;align-items:center;margin-top:47px}
+.minimalHomeLinks a{font-size:14px;font-weight:650;display:inline-flex;justify-content:space-between;gap:30px;align-items:center;border-bottom:1px solid #333;padding:0 0 13px;min-width:150px;transition:color .2s,border-color .2s}
+.minimalHomeLinks a:hover{color:#6e7471;border-color:#8c928e}
+.minimalHomePortrait{margin:0;align-self:center;justify-self:end;width:160px}
+.minimalHomePortrait img{width:100%;height:auto;display:block;filter:grayscale(1)}
+.minimalHomePortrait figcaption{font-size:10px;letter-spacing:.09em;font-weight:650;color:#8a8c8a;line-height:1.6;text-align:right;margin-top:16px}
+.minimalHomeBottom{display:flex;justify-content:space-between;gap:18px;padding:22px 0 28px;border-top:1px solid #dcdedb;color:#929592;font-size:10px;font-weight:600;letter-spacing:.07em}
+@media (max-width:900px){
+  .minimalHomeMain{grid-template-columns:minmax(0,1fr) 130px;gap:26px}
+  .minimalHomeCopy h1{font-size:clamp(52px,7vw,76px)}
+  .minimalHomePortrait{width:125px}
+}
+@media (max-width:700px){
+  .pageHome .headerRow{height:66px}
+  .pageHome .minimalHome,.pageHome .minimalHomeInner{min-height:calc(100svh - 66px)}
+  .pageHome .mobileNav{background:#fbfbfa}
+  .minimalHomeTop{padding-top:26px}
+  .minimalHomeIndex{font-size:9px}
+  .minimalHomeMain{grid-template-columns:1fr;gap:34px;padding:58px 0 72px;align-content:center}
+  .minimalHomeOverline{font-size:13px;margin-bottom:26px}
+  .minimalHomeCopy h1{font-size:clamp(47px,10.5vw,72px);line-height:1.26}
+  .minimalHomeDesc{font-size:13px;line-height:1.85;margin-top:28px;max-width:450px}
+  .minimalHomeLinks{margin-top:34px;gap:22px;flex-wrap:wrap}
+  .minimalHomeLinks a{font-size:12px;min-width:128px;gap:17px;padding-bottom:10px}
+  .minimalHomePortrait{width:86px;justify-self:end}
+  .minimalHomePortrait figcaption{font-size:8px;margin-top:9px}
+  .minimalHomeBottom{font-size:9px;padding:16px 0 20px}
+}
+@media (max-width:360px){
+  .minimalHomeCopy h1{font-size:43px}
+  .minimalHomeIndex:last-child{display:none}
+  .minimalHomeBottom{font-size:8px}
 }
