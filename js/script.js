@@ -169,50 +169,16 @@ function initMobileNav() {
 
 /** ---------- Active Nav (현재 위치 표시) ---------- */
 function initActiveNav() {
-  const links = qsa(".navLink, .mobileNavLink");
-  const targets = ["about", "portfolio", "contact"]
-    .map((id) => document.getElementById(id))
-    .filter(Boolean);
-
-  if (!links.length || !targets.length || !("IntersectionObserver" in window)) return;
-
-  const setActive = (id) => {
-    links.forEach((a) => {
-      if (a.getAttribute("href") === "#" + id) {
-        a.setAttribute("aria-current", "true");
-      } else {
-        a.removeAttribute("aria-current");
-      }
-    });
-  };
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) setActive(entry.target.id);
-      });
-    },
-    { rootMargin: "-45% 0px -50% 0px" }
-  );
-
-  targets.forEach((el) => observer.observe(el));
-
-  window.addEventListener(
-    "scroll",
-    () => {
-      const atBottom =
-        window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
-
-      if (window.scrollY < 200) {
-        setActive("home");
-      } else if (atBottom) {
-        setActive("contact");
-      }
-    },
-    { passive: true }
-  );
-
-  setActive("home");
+  const currentPath = window.location.pathname.split("/").pop() || "index.html";
+  qsa(".navLink, .mobileNavLink").forEach((link) => {
+    const destination = new URL(link.getAttribute("href"), window.location.href);
+    const page = destination.pathname.split("/").pop() || "index.html";
+    if (page === currentPath) {
+      link.setAttribute("aria-current", "page");
+    } else {
+      link.removeAttribute("aria-current");
+    }
+  });
 }
 
 /** ---------- Career Render ---------- */
