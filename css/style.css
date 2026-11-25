@@ -24,3 +24,84 @@ a{color:inherit;text-decoration:none}button{font:inherit;cursor:pointer}img{disp
 @media(max-width:700px){.container{width:calc(100% - 36px)}.headerRow{height:60px}.nav{display:none}.navToggle{display:grid;place-items:center}.hero{padding:46px 0 38px}.heroGrid{grid-template-columns:1fr;gap:30px}.heroCopy{text-align:left}.heroTitle{font-size:clamp(27px,6.8vw,36px);margin-bottom:22px}.heroDesc{font-size:14px}.desktopBreak{display:none}.heroActions{margin-top:25px}.heroBtn{min-width:120px;min-height:44px;font-size:13px}.heroVisual{grid-row:1}.heroPortrait{width:min(260px,72vw)}.featuredGrid{grid-template-columns:1fr;gap:28px}.featuredThumb{aspect-ratio:1.4}.featured{padding-bottom:70px}.tabs{gap:7px;margin-bottom:30px}.tab{padding:8px 11px;font-size:12px;min-height:38px}.workGrid{grid-template-columns:1fr;gap:26px}.workThumb{aspect-ratio:1.65}.portfolioSection{padding-bottom:80px}.moreBtnWrap{margin-top:44px}.aboutSection{padding:30px 0 70px}.aboutGrid{grid-template-columns:1fr;gap:60px;padding-top:50px}.lowerHeading{font-size:23px}.careerMiniList{gap:8px}.careerMiniCompany{font-size:11px}.careerMiniTag{font-size:9px}.careerMiniPeriod{font-size:9px}.skillTags{grid-template-columns:repeat(4,minmax(0,1fr))}.careerModalDialog{padding:28px 20px}.careerModalTitle{font-size:22px}}
 @media(max-width:400px){.skillTags{grid-template-columns:repeat(2,minmax(0,1fr))}.careerMiniList{grid-template-columns:1fr}.careerMiniCompany{font-size:13px}.careerMiniTag{font-size:11px}.careerMiniPeriod{font-size:11px}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important}}
+
+/* =========================================================
+   Three-page portfolio: Home / Portfolio / About
+   Typography-first Home and compact portrait (2026-11-25)
+========================================================= */
+:root{--page:1120px;--blue:#315c97}
+body{background:#fff}
+.siteHeader{background:rgba(255,255,255,.95);border-bottom:1px solid #eee}
+.navLink[aria-current="page"],.mobileNavLink[aria-current="page"]{color:var(--blue);font-weight:750}
+.pageHome .homeHero{padding:110px 0 34px}
+.homeHeroLayout{display:grid;grid-template-columns:minmax(0,1fr) 216px;align-items:center;gap:70px;min-height:510px}
+.homeEyebrow{margin:0 0 28px;color:#526681;font-size:12px;font-weight:750;letter-spacing:.14em}
+.pageHome .heroTitle{font-size:clamp(38px,5.15vw,68px);font-weight:790;letter-spacing:-.07em;line-height:1.23;margin:0 0 32px}
+.homeTitleAccent{color:var(--blue)}
+.pageHome .heroDesc{font-size:17px;line-height:1.9;color:#4d535b}
+.homeExpertise{display:flex;gap:10px;flex-wrap:wrap;margin-top:34px}
+.homeExpertise span{padding:9px 13px;border:1px solid #dfe4e9;border-radius:3px;color:#3e4852;font-size:12px;letter-spacing:.015em}
+.pageHome .heroActions{align-items:center;gap:28px;margin-top:38px}
+.pageHome .heroBtn{padding:0 25px;min-width:0;min-height:52px;border-radius:3px;gap:18px}
+.homeTextLink{font-size:14px;font-weight:700;display:inline-flex;align-items:center;gap:13px;border-bottom:1px solid #999;padding:0 0 9px}
+.homeTextLink:hover{color:var(--blue);border-color:var(--blue)}
+.pageHome .heroVisual{justify-content:flex-end}
+.pageHome .heroPortrait{width:min(210px,100%);height:auto}
+.homePortraitWrap{align-self:center;opacity:.97}
+.homeBottomLine{display:flex;justify-content:space-between;gap:20px;border-bottom:1px solid #d4d6d9;padding:38px 0 25px;color:#7e8388;font-size:11px;font-weight:650;letter-spacing:.12em}
+.homeIntroSection{padding:100px 0 135px}
+.homeIntroGrid{display:grid;grid-template-columns:1fr 2fr;gap:50px}
+.homeSectionIndex{font-size:12px;letter-spacing:.1em;font-weight:700;color:var(--blue);margin:8px 0 0}
+.homeIntroGrid h2{font-size:clamp(26px,3vw,39px);line-height:1.45;letter-spacing:-.045em;font-weight:750;margin:0 0 22px}
+.homeIntroGrid p:not(.homeSectionIndex){color:#62666a;font-size:15px;line-height:1.8;margin:0 0 30px}
+.pageIntro{padding-top:93px;padding-bottom:65px;border-bottom:1px solid #ececec;margin-bottom:57px}
+.pageIntro .homeEyebrow{margin-bottom:18px}
+.pageIntro h1{font-size:clamp(55px,7.3vw,92px);line-height:1.1;letter-spacing:-.065em;margin:0 0 18px;font-weight:790}
+.pageIntroPeriod{color:var(--blue)}
+.pageIntro>p:last-child{margin:0;font-size:15px;color:#646464;line-height:1.65}
+.pagePortfolio .featured{padding:0 0 92px}
+.pagePortfolio .featuredGrid{gap:20px}
+.pagePortfolio .featuredThumb{aspect-ratio:1.35;border-radius:7px}
+.pagePortfolio .featuredTitle{font-size:16px}
+.pagePortfolio .portfolioSection{padding:0 0 120px}
+.pagePortfolio .tabs{justify-content:flex-start;margin-bottom:38px}
+.pagePortfolio .tab{background:transparent;border:1px solid #ddd;color:#555;border-radius:3px;font-size:13px}
+.pagePortfolio .tab.isActive{border-color:var(--blue);background:var(--blue);color:#fff}
+.pagePortfolio .workThumb{border-radius:7px}
+.pageAbout .aboutSection{padding:0 0 110px}
+.pageAbout .aboutGrid{padding-top:0;border-top:0}
+.pageAbout .lowerHeading{font-size:21px}
+.pageAbout .aboutStatement{font-size:18px;font-weight:600;line-height:1.75}
+@media(max-width:900px){
+  .homeHeroLayout{grid-template-columns:minmax(0,1fr) 175px;gap:30px;min-height:430px}
+  .pageHome .heroTitle{font-size:clamp(38px,5vw,54px)}
+  .pageHome .heroPortrait{width:175px}
+}
+@media(max-width:700px){
+  .pageHome .homeHero{padding:65px 0 25px}
+  .homeHeroLayout{grid-template-columns:1fr;gap:24px;min-height:0}
+  .pageHome .heroTitle{font-size:clamp(36px,8.2vw,52px);line-height:1.3;margin-bottom:24px}
+  .pageHome .heroDesc{font-size:14px;line-height:1.85}
+  .homeEyebrow{font-size:10px;margin-bottom:22px}
+  .pageHome .heroVisual{grid-row:auto;justify-content:flex-start}
+  .pageHome .heroPortrait{width:115px}
+  .homePortraitWrap{margin-top:0}
+  .homeExpertise{margin-top:26px;gap:7px}
+  .homeExpertise span{font-size:10px;padding:7px 9px}
+  .pageHome .heroActions{gap:19px;flex-wrap:wrap;margin-top:26px}
+  .pageHome .heroBtn{min-height:46px;padding:0 17px;font-size:12px}
+  .homeTextLink{font-size:12px}
+  .homeBottomLine{font-size:9px;padding:26px 0 20px}
+  .homeIntroSection{padding:65px 0 80px}
+  .homeIntroGrid{grid-template-columns:1fr;gap:26px}
+  .homeIntroGrid h2{font-size:26px}
+  .pageIntro{padding-top:65px;padding-bottom:38px;margin-bottom:38px}
+  .pageIntro h1{font-size:clamp(52px,13vw,72px)}
+  .pageIntro>p:last-child{font-size:13px}
+  .pagePortfolio .featured{padding-bottom:65px}
+  .pagePortfolio .featuredThumb{aspect-ratio:1.6}
+  .pagePortfolio .portfolioSection{padding-bottom:80px}
+  .pagePortfolio .tabs{gap:6px;margin-bottom:28px}
+  .pagePortfolio .tab{font-size:12px}
+  .pageAbout .aboutSection{padding-bottom:75px}
+}
